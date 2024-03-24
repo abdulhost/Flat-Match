@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marko One:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus SC:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kadwa:wght@700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kantumruy:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@400&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kufam:wght@400&display=swap" />
+  <style>
+    .div-map-child,
+    .location {
+      position: absolute;
+      top: calc(50% - 288.5px);
+    }
+
+    .location {
+      left: 32px;
+      display: inline-block;
+      width: 111px;
+    }
+
+    .div-map-child {
+      left: 158.9px;
+      border-radius: var(--br-6xl);
+      background-color: var(--color-gainsboro);
+      width: 377.4px;
+      height: 31px;
+    }
+
+    .kilometer-range {
+      position: absolute;
+      top: calc(50% - 285.5px);
+      left: 549px;
+      display: inline-block;
+      width: 182px;
+    }
+
+    .div-map-item,
+    .vector-icon {
+      position: absolute;
+      top: calc(50% - 285.5px);
+      height: 31px;
+    }
+
+    .div-map-item {
+      left: 750px;
+      border-radius: var(--br-6xl);
+      background-color: var(--color-gainsboro);
+      width: 377.4px;
+    }
+
+    .vector-icon {
+      width: 4.13%;
+      right: 7.94%;
+      left: 87.94%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .div-map-inner {
+      position: absolute;
+      top: 129px;
+      left: 0;
+      background-color: var(--color-gainsboro);
+      width: 1362px;
+      height: 507px;
+    }
+
+    .map-integration {
+      position: absolute;
+      top: 248px;
+      left: 548.6px;
+      display: inline-block;
+      width: 157px;
+    }
+
+    .div-map {
+      position: absolute;
+      top: 0;
+      left: 1px;
+      background-color: var(--color-darkgray);
+      width: 1361px;
+      height: 651px;
+    }
+
+    .all-rights-are {
+      position: absolute;
+      top: 129px;
+      left: 137px;
+      display: inline-block;
+      width: 400px;
+    }
+
+    .vector-icon1 {
+      position: absolute;
+      height: 15.14%;
+      width: 1.9%;
+      top: 68.11%;
+      right: 91.47%;
+      bottom: 16.76%;
+      left: 6.63%;
+      max-width: 100%;
+      overflow: hidden;
+      max-height: 100%;
+    }
+
+    .flatmatch {
+      position: absolute;
+      top: 22px;
+      left: 95px;
+      display: inline-block;
+      width: 133px;
+    }
+
+    .vector-icon2,
+    .vector-icon3 {
+      position: absolute;
+      height: 15.68%;
+      width: 2.42%;
+      top: 67.57%;
+      right: 14.92%;
+      bottom: 16.76%;
+      left: 82.66%;
+      max-width: 100%;
+      overflow: hidden;
+      max-height: 100%;
+    }
+
+    .vector-icon3 {
+      height: 11.35%;
+      width: 2.79%;
+      top: 69.73%;
+      right: 19.62%;
+      bottom: 18.92%;
+      left: 77.59%;
+    }
+
+    .footer {
+      position: absolute;
+      top: 651px;
+      left: 0;
+      background-color: var(--color-dimgray);
+      width: 1361px;
+      height: 185px;
+      color: var(--color-white);
+    }
+
+    .frame,
+    .tablermail-filled {
+      position: absolute;
+      top: 1227px;
+      left: -1px;
+      width: 1362px;
+      height: 836px;
+      overflow: hidden;
+    }
+
+    .tablermail-filled {
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 24px;
+    }
+
+    .contact-us {
+      position: absolute;
+      top: 21px;
+      left: 0;
+    }
+
+    .emojione-v1door-icon,
+    .frame5 {
+      position: absolute;
+      top: 0;
+      left: 1116px;
+      width: 75px;
+      height: 39px;
+      overflow: hidden;
+    }
+
+    .emojione-v1door-icon {
+      left: 14px;
+      width: 85px;
+      height: 82px;
+    }
+
+    .flatmatch1,
+    .frame-child {
+      position: absolute;
+      top: 77px;
+      left: 0;
+    }
+
+    .frame-child {
+      top: 113px;
+      left: 3px;
+      border-radius: 50%;
+      background: radial-gradient(50% 50%at 50% 50%, #3e3737, #866e6e);
+      width: 119px;
+      height: 4px;
+    }
+
+    .emojione-v1door-parent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 122px;
+      height: 125px;
+    }
+
+    .about-us,
+    .home {
+      display: inline-block;
+      height: 42px;
+      flex-shrink: 0;
+    }
+
+    .home {
+      width: 80px;
+      position: relative;
+    }
+
+    .about-us {
+      width: 107px;
+    }
+
+    .about-us,
+    .post-property {
+      position: relative;
+    }
+
+    .home-parent {
+      position: absolute;
+      top: 39px;
+      left: 512px;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 38px;
+      font-size: var(--font-size-lg);
+      font-family: var(--font-kantumruy);
+    }
+
+    .frame6,
+    .nav-bar {
+      position: absolute;
+      top: 32px;
+      left: 0;
+      width: 1173px;
+      height: 125px;
+    }
+
+    .frame6 {
+      top: 0;
+      height: 157px;
+      overflow: hidden;
+      font-size: 24px;
+      color: var(--color-dimgray);
+      font-family: var(--font-kadwa);
+    }
+
+    .fluentlocation-20-regular,
+    .frame2,
+    .frame3,
+    .frame4,
+    .frame9 {
+      position: absolute;
+      top: 0;
+      left: 21px;
+      width: 1191px;
+      height: 157px;
+      overflow: hidden;
+    }
+
+    .fluentlocation-20-regular,
+    .frame2,
+    .frame3,
+    .frame9 {
+      left: 63px;
+      width: 1212px;
+    }
+
+    .fluentlocation-20-regular,
+    .frame2,
+    .frame9 {
+      left: 0;
+      width: 1275px;
+    }
+
+    .fluentlocation-20-regular,
+    .frame9 {
+      top: 41px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .frame9 {
+      top: 0;
+      left: 1440px;
+      height: 61px;
+    }
+
+    .child-div,
+    .frame-icon,
+    .frame11 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 315px;
+      height: 388.4px;
+    }
+
+    .child-div {
+      border-radius: var(--br-8xs);
+      background-color: var(--color-darkgray);
+    }
+
+    .frame-icon,
+    .frame11 {
+      overflow: hidden;
+    }
+
+    .frame-icon {
+      left: 19.6px;
+      width: 263.8px;
+      height: 151.2px;
+      object-fit: cover;
+    }
+
+    .rent-now {
+      position: absolute;
+      top: 8.4px;
+      left: 7.3px;
+      display: inline-block;
+      width: 59.1px;
+      height: 15.7px;
+    }
+
+    .rent-now-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: var(--br-6xl);
+      background-color: var(--color-sandybrown);
+      width: 74px;
+      height: 32.5px;
+    }
+
+    .frame-icon1,
+    .frame13 {
+      position: absolute;
+      top: 253px;
+      left: 105.4px;
+      width: 93px;
+      height: 32.5px;
+      overflow: hidden;
+    }
+
+    .frame-icon1 {
+      top: 166.9px;
+      left: 122.4px;
+      width: 59px;
+      height: 11.5px;
+    }
+
+    .frame15,
+    .location- {
+      position: absolute;
+      top: 0;
+      height: 18.9px;
+    }
+
+    .location- {
+      left: 0;
+      display: inline-block;
+      width: 76.9px;
+    }
+
+    .frame15 {
+      left: 26.4px;
+      width: 251px;
+      overflow: hidden;
+    }
+
+    .frame-icon2,
+    .frame17,
+    .gali-no-26 {
+      position: absolute;
+      top: 0;
+      height: 44.1px;
+    }
+
+    .gali-no-26 {
+      left: 98px;
+      display: inline-block;
+      width: 205.8px;
+    }
+
+    .frame-icon2,
+    .frame17 {
+      left: 0;
+      width: 303.8px;
+      overflow: hidden;
+    }
+
+    .frame-icon2 {
+      top: 1px;
+      left: 9.4px;
+      width: 285px;
+      height: 16.8px;
+    }
+
+    .frame16 {
+      top: 1px;
+      left: 0;
+      height: 44.1px;
+      font-size: var(--font-size-mini);
+      font-family: var(--font-kufam);
+    }
+
+    .frame12,
+    .frame14,
+    .frame16 {
+      position: absolute;
+      width: 303.8px;
+      overflow: hidden;
+    }
+
+    .frame14 {
+      top: 197.4px;
+      left: 0;
+      height: 45.1px;
+      font-size: var(--font-size-sm);
+      font-family: var(--font-kodchasan);
+    }
+
+    .frame12 {
+      top: 43px;
+      left: 5.6px;
+      height: 285.5px;
+    }
+
+    .child-div-room {
+      width: 315px;
+      position: relative;
+      height: 388.4px;
+    }
+
+    .child-div-room-parent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: var(--br-61xl) var(--br-61xl) 0 0;
+      background-color: #ded4c3;
+      width: 1358px;
+      height: 1034px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 82px 100px;
+      box-sizing: border-box;
+      gap: 10px;
+    }
+
+    .explore-button-anchor-tag-child {
+      position: absolute;
+      top: 0;
+      left: 3.7px;
+      background-color: var(--color-gray);
+      width: 204.8px;
+      height: 30px;
+    }
+
+    .vector-icon4 {
+      position: absolute;
+      height: 56%;
+      width: 23.88%;
+      top: 23.33%;
+      right: 27.96%;
+      bottom: 20.67%;
+      left: 48.15%;
+      max-width: 100%;
+      overflow: hidden;
+      max-height: 100%;
+    }
+
+    .explore-more {
+      position: absolute;
+      top: 7px;
+      left: 0;
+      display: inline-block;
+      width: 110.2px;
+    }
+
+    .explore-button-anchor-tag {
+      position: absolute;
+      top: 994px;
+      left: 0;
+      width: 208.5px;
+      height: 30px;
+    }
+
+    .frame10,
+    .frame25 {
+      position: absolute;
+      top: 0;
+      overflow: hidden;
+    }
+
+    .frame25 {
+      left: 510.8px;
+      width: 208.5px;
+      height: 1024px;
+      font-size: var(--font-size-smi);
+      color: var(--color-white);
+    }
+
+    .frame10 {
+      left: 0;
+      width: 1358px;
+      height: 1034px;
+    }
+
+    .explore-button-anchor-tag-item {
+      position: absolute;
+      top: 0;
+      left: 67.8px;
+      background-color: var(--color-gray);
+      width: 176.8px;
+      height: 30px;
+    }
+
+    .vector-icon5 {
+      position: absolute;
+      height: 56%;
+      width: 17.58%;
+      top: 20.33%;
+      right: 41.99%;
+      bottom: 23.67%;
+      left: 40.43%;
+      max-width: 100%;
+      overflow: hidden;
+      max-height: 100%;
+    }
+
+    .explore-more1 {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      display: inline-block;
+      width: 95.1px;
+    }
+
+    .explore-button-anchor-tag1,
+    .frame27 {
+      position: absolute;
+      top: 998px;
+      left: 0;
+      width: 244.6px;
+      height: 30px;
+    }
+
+    .frame27 {
+      top: 0;
+      left: 159.5px;
+      height: 1028px;
+      overflow: hidden;
+    }
+
+    .connect-with-roommate {
+      position: absolute;
+      top: calc(50% - 7.35px);
+      left: calc(50% - 72.55px);
+      display: inline-block;
+      width: 144.1px;
+      height: 12.6px;
+    }
+
+    .connect-with-roommate-wrapper {
+      position: absolute;
+      top: calc(50% - 11.55px);
+      left: calc(50% - 90.65px);
+      border-radius: var(--br-6xl);
+      background-color: var(--color-sandybrown);
+      width: 159.1px;
+      height: 23.1px;
+    }
+
+    .frame31,
+    .vector-icon6 {
+      position: absolute;
+      top: 100.6px;
+      left: 71.8px;
+      width: 181.3px;
+      height: 23.1px;
+      overflow: hidden;
+    }
+
+    .vector-icon6 {
+      height: 38.1%;
+      width: 3.29%;
+      top: 3.63%;
+      right: 96.71%;
+      bottom: 58.28%;
+      left: 0;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .gali-no-262,
+    .location-2 {
+      position: absolute;
+      top: 0;
+      left: 72.7px;
+      display: inline-block;
+      width: 235px;
+      height: 44.1px;
+    }
+
+    .location-2 {
+      left: 0;
+      font-size: var(--font-size-sm);
+      font-family: var(--font-kodchasan);
+      width: 72.6px;
+      height: 18.9px;
+    }
+
+    .frame33,
+    .frame34 {
+      position: absolute;
+      top: 0;
+      left: 17.2px;
+      width: 307.6px;
+      height: 44.1px;
+      overflow: hidden;
+    }
+
+    .frame33 {
+      left: 0;
+      width: 324.9px;
+    }
+
+    .description-,
+    .join-us-in {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      width: 92.5px;
+      height: 18.9px;
+    }
+
+    .join-us-in {
+      top: 3.1px;
+      left: 89.7px;
+      font-size: var(--font-size-xs);
+      font-family: var(--font-kufam);
+      width: 235px;
+      height: 44.1px;
+    }
+
+    .frame36 {
+      position: absolute;
+      top: 0;
+      left: 0.3px;
+      width: 324.6px;
+      height: 47.2px;
+      overflow: hidden;
+    }
+
+    .frame35 {
+      top: 47.2px;
+      height: 47.2px;
+      font-size: var(--font-size-sm);
+      font-family: var(--font-kodchasan);
+    }
+
+    .frame30,
+    .frame32,
+    .frame35 {
+      position: absolute;
+      left: 0;
+      width: 324.9px;
+      overflow: hidden;
+    }
+
+    .frame32 {
+      top: 0;
+      height: 94.5px;
+      font-size: var(--font-size-mini);
+      font-family: var(--font-kufam);
+    }
+
+    .frame30 {
+      top: 52.4px;
+      height: 123.7px;
+    }
+
+    .female {
+      left: 53.8px;
+      display: inline-block;
+      width: 52.8px;
+    }
+
+    .female,
+    .frame38,
+    .frame39,
+    .gender- {
+      position: absolute;
+      top: 0;
+      height: 16px;
+    }
+
+    .gender- {
+      left: 0;
+      display: inline-block;
+      width: 53.8px;
+    }
+
+    .frame38,
+    .frame39 {
+      left: 13.1px;
+      width: 106.7px;
+      overflow: hidden;
+    }
+
+    .frame38 {
+      top: 23px;
+      left: 15.8px;
+      width: 119.8px;
+    }
+
+    .need-room-mate {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      width: 141.6px;
+      height: 21px;
+    }
+
+    .frame37,
+    .frame40 {
+      position: absolute;
+      top: 0;
+      width: 151.4px;
+      overflow: hidden;
+    }
+
+    .frame40 {
+      left: 0;
+      height: 21px;
+      text-align: center;
+      font-size: var(--font-size-mini);
+      color: var(--color-red);
+      font-family: var(--font-kufam);
+    }
+
+    .frame37 {
+      left: 86.7px;
+      height: 39px;
+    }
+
+    .div-room-mate,
+    .inside-of-room-mate {
+      position: absolute;
+      top: 12px;
+      left: 26.9px;
+      width: 324.9px;
+      height: 176.1px;
+    }
+
+    .div-room-mate {
+      top: 95px;
+      left: 0;
+      border-radius: var(--br-17xl);
+      background-color: var(--color-white);
+      width: 377.5px;
+      height: 200.5px;
+    }
+
+    .frame29,
+    .frame42,
+    .frame46,
+    .frame48 {
+      position: absolute;
+      left: 0;
+      overflow: hidden;
+    }
+
+    .frame29 {
+      top: 0;
+      width: 377.5px;
+      height: 295.5px;
+      font-family: var(--font-marko-one);
+    }
+
+    .frame42,
+    .frame46,
+    .frame48 {
+      top: 52.4px;
+      width: 324.9px;
+      height: 44.1px;
+    }
+
+    .frame46,
+    .frame48 {
+      top: 0;
+      height: 47.2px;
+    }
+
+    .frame48 {
+      top: 53.4px;
+      left: 71.8px;
+      width: 181.3px;
+      height: 23.1px;
+      font-size: var(--font-size-2xs);
+      font-family: var(--font-marko-one);
+    }
+
+    .frame44,
+    .frame45,
+    .frame49 {
+      position: absolute;
+      top: 99.6px;
+      left: 0;
+      width: 324.9px;
+      height: 76.5px;
+      overflow: hidden;
+    }
+
+    .frame44,
+    .frame49 {
+      top: 0;
+      left: 86.7px;
+      width: 151.4px;
+      height: 39px;
+      font-size: var(--font-size-2xs);
+      font-family: var(--font-marko-one);
+    }
+
+    .frame44 {
+      left: 0;
+      width: 324.9px;
+      height: 176.1px;
+      font-size: var(--font-size-sm);
+      font-family: var(--font-kodchasan);
+    }
+
+    .div-room-mate1,
+    .frame41 {
+      position: absolute;
+      left: 0;
+      width: 377.5px;
+    }
+
+    .div-room-mate1 {
+      top: 780px;
+      border-radius: var(--br-17xl);
+      background-color: var(--color-white);
+      height: 200.5px;
+    }
+
+    .frame41 {
+      top: 0;
+      height: 980.5px;
+      overflow: hidden;
+      font-size: var(--font-size-mini);
+    }
+
+    .gali-no-264,
+    .location-4 {
+      position: absolute;
+      top: 0;
+      left: 17.2px;
+      display: inline-block;
+      width: 72.6px;
+      height: 18.9px;
+    }
+
+    .gali-no-264 {
+      left: 89.9px;
+      font-size: var(--font-size-mini);
+      font-family: var(--font-kufam);
+      width: 235px;
+      height: 44.1px;
+    }
+
+    .frame56,
+    .frame57 {
+      position: absolute;
+      overflow: hidden;
+    }
+
+    .frame56 {
+      top: 100.6px;
+      left: 71.8px;
+      width: 181.3px;
+      height: 23.1px;
+      font-size: var(--font-size-2xs);
+      font-family: var(--font-marko-one);
+    }
+
+    .frame57 {
+      top: 47.2px;
+      left: 0;
+      width: 324.9px;
+      height: 47.2px;
+    }
+
+    .div-room-mate2,
+    .frame53 {
+      position: absolute;
+      left: 0;
+      width: 377.5px;
+    }
+
+    .div-room-mate2 {
+      top: 561px;
+      border-radius: var(--br-17xl);
+      background-color: var(--color-white);
+      height: 200.5px;
+    }
+
+    .frame53 {
+      top: 0;
+      height: 761.5px;
+      overflow: hidden;
+      font-size: var(--font-size-sm);
+      font-family: var(--font-kodchasan);
+    }
+
+    .need-room-mate3 {
+      position: absolute;
+      top: 0;
+      left: 86.7px;
+      font-size: var(--font-size-mini);
+      color: var(--color-red);
+      text-align: center;
+      display: inline-block;
+      width: 141.6px;
+      height: 21px;
+    }
+
+    .description-3,
+    .location-5 {
+      position: absolute;
+      top: 52.4px;
+      left: 17.2px;
+      font-size: var(--font-size-sm);
+      font-family: var(--font-kodchasan);
+      display: inline-block;
+      width: 72.6px;
+      height: 18.9px;
+    }
+
+    .description-3 {
+      top: 99.6px;
+      left: 0.3px;
+      width: 92.5px;
+    }
+
+    .gali-no-265 {
+      top: 52.4px;
+      left: 89.9px;
+      font-size: var(--font-size-mini);
+      width: 235px;
+      height: 44.1px;
+    }
+
+    .female3,
+    .gali-no-265,
+    .gender-3,
+    .join-us-in3 {
+      position: absolute;
+      display: inline-block;
+    }
+
+    .join-us-in3 {
+      top: 102.8px;
+      left: 89.9px;
+      font-size: var(--font-size-xs);
+      width: 235px;
+      height: 44.1px;
+    }
+
+    .female3,
+    .gender-3 {
+      top: 23px;
+      left: 169.5px;
+      font-family: var(--font-marko-one);
+      width: 52.8px;
+      height: 16px;
+    }
+
+    .gender-3 {
+      left: 115.7px;
+      width: 53.8px;
+    }
+
+    .vector-icon9 {
+      position: absolute;
+      height: 9.54%;
+      width: 3.29%;
+      top: 30.66%;
+      right: 96.71%;
+      bottom: 59.8%;
+      left: 0;
+      max-width: 100%;
+      overflow: hidden;
+      max-height: 100%;
+    }
+
+    .frame-div {
+      position: absolute;
+      top: calc(50% + 64.95px);
+      left: calc(50% - 90.65px);
+      border-radius: var(--br-6xl);
+      background-color: var(--color-sandybrown);
+      width: 159.1px;
+      height: 23.1px;
+      font-family: var(--font-marko-one);
+    }
+
+    .div-room-mate3 {
+      position: absolute;
+      top: 329px;
+      left: 0;
+      border-radius: var(--br-17xl);
+      background-color: var(--color-white);
+      width: 377.5px;
+      height: 200.5px;
+    }
+
+    .frame63 {
+      left: 0;
+      width: 377.5px;
+      height: 529.5px;
+    }
+
+    .frame26,
+    .frame28,
+    .frame63 {
+      position: absolute;
+      top: 0;
+      overflow: hidden;
+    }
+
+    .frame28 {
+      left: 0;
+      width: 377.5px;
+      height: 980.5px;
+      font-size: var(--font-size-2xs);
+      color: var(--color-dimgray);
+      font-family: var(--font-kufam);
+    }
+
+    .frame26 {
+      left: 859.5px;
+      width: 404.2px;
+      height: 1028px;
+      font-size: var(--font-size-smi);
+      color: var(--color-white);
+    }
+
+    .section-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1358px;
+      height: 1034px;
+    }
+
+    .frame1,
+    .frame7,
+    .frame8 {
+      position: absolute;
+      overflow: hidden;
+    }
+
+    .frame8 {
+      top: 0;
+      left: 1px;
+      width: 1460px;
+      height: 1034px;
+    }
+
+    .frame1,
+    .frame7 {
+      width: 1461px;
+    }
+
+    .frame7 {
+      top: 165px;
+      left: 0;
+      height: 1034px;
+      font-size: var(--font-size-2xs);
+      color: var(--color-dimgray);
+      font-family: var(--font-marko-one);
+    }
+
+    .frame1 {
+      top: 0;
+      left: -1px;
+      height: 1199px;
+      font-size: var(--font-size-sm);
+      color: #000;
+      font-family: var(--font-marcellus-sc);
+    }
+
+    .desktop-2 {
+      width: 100%;
+      position: relative;
+      background-color: rgba(228, 205, 165, 0.66);
+      height: 2063px;
+      overflow: hidden;
+      text-align: left;
+      font-size: var(--font-size-lgi);
+      color: var(--color-dimgray);
+      font-family: var(--font-marko-one);
+    }
+
+    body {
+      margin: 0;
+      line-height: normal;
+    }
+
+    :root {
+      /* fonts */
+      --font-marko-one: "Marko One";
+      --font-kufam: Kufam;
+      --font-kodchasan: Kodchasan;
+      --font-kantumruy: Kantumruy;
+      --font-kadwa: Kadwa;
+      --font-marcellus-sc: "Marcellus SC";
+
+      /* font sizes */
+      --font-size-2xs: 11px;
+      --font-size-xs: 12px;
+      --font-size-mini: 15px;
+      --font-size-sm: 14px;
+      --font-size-smi: 13px;
+      --font-size-lg: 18px;
+      --font-size-lgi: 19px;
+
+      /* Colors */
+      --color-white: #fff;
+      --color-sandybrown: #edbc69;
+      --color-dimgray: #584848;
+      --color-red: #ff1010;
+      --color-gray: rgba(255, 253, 253, 0);
+      --color-darkgray: #b2a390;
+      --color-gainsboro: #d9d9d9;
+
+      /* Border radiuses */
+      --br-17xl: 36px;
+      --br-6xl: 25px;
+      --br-61xl: 80px;
+      --br-8xs: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="desktop-2">
+    <div class="frame">
+      <div class="div-map">
+        <div class="location">Location</div>
+        <div class="div-map-child"></div>
+        <div class="kilometer-range">Kilometer Range</div>
+        <div class="div-map-item"></div>
+        <img class="vector-icon" alt="" src="./public/vector.svg" />
+
+        <div class="div-map-inner"></div>
+        <div class="map-integration">MAP Integration</div>
+      </div>
+      <div class="footer">
+        <div class="all-rights-are">All Rights are Reserved @AbdulWadood</div>
+        <img class="vector-icon1" alt="" src="./public/vector.svg" />
+
+        <div class="flatmatch">FlatMatch</div>
+        <img class="vector-icon2" alt="" src="./public/vector.svg" />
+
+        <img class="vector-icon3" alt="" src="./public/vector.svg" />
+      </div>
+    </div>
+    <div class="frame1">
+      <div class="frame2">
+        <div class="frame3">
+          <div class="tablermail-filled"></div>
+          <div class="frame4">
+            <div class="frame5">
+              <div class="contact-us">Contact Us</div>
+            </div>
+            <div class="frame6">
+              <div class="nav-bar">
+                <div class="emojione-v1door-parent">
+                  <img class="emojione-v1door-icon" alt="" src="./public/emojionev1door.svg" />
+
+                  <b class="flatmatch1">FlatMatch</b>
+                  <div class="frame-child"></div>
+                </div>
+                <div class="home-parent">
+                  <div class="home">Home</div>
+                  <div class="about-us">About Us</div>
+                  <div class="post-property">Post Property</div>
+                  <div class="post-property">Need Roomate</div>
+                  <div class="home">Login</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame7">
+        <div class="frame8">
+          <div class="frame9">
+            <div class="fluentlocation-20-regular"></div>
+          </div>
+          <div class="section-content">
+            <div class="frame10">
+              <div class="child-div-room-parent">
+                <div class="child-div-room">
+                  <div class="frame11">
+                    <div class="child-div"></div>
+                    <div class="child-div"></div>
+                  </div>
+                  <div class="frame12">
+                    <img class="frame-icon" alt="" src="./public/frame@2x.png" />
+
+                    <div class="frame13">
+                      <div class="rent-now-wrapper">
+                        <div class="rent-now">Rent Now</div>
+                      </div>
+                    </div>
+                    <img class="frame-icon1" alt="" src="./public/frame.svg" />
+
+                    <div class="frame14">
+                      <div class="frame15">
+                        <div class="location-">Location:-</div>
+                      </div>
+                      <div class="frame16">
+                        <div class="frame17">
+                          <div class="gali-no-26">
+                            Gali No 26 R-z Tugalkabaad extn New Delhi 110020
+                          </div>
+                        </div>
+                        <img class="frame-icon2" alt="" src="./public/frame.svg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="child-div-room">
+                  <div class="frame11">
+                    <div class="child-div"></div>
+                    <div class="child-div"></div>
+                  </div>
+                  <div class="frame12">
+                    <img class="frame-icon" alt="" src="./public/frame@2x.png" />
+
+                    <div class="frame13">
+                      <div class="rent-now-wrapper">
+                        <div class="rent-now">Rent Now</div>
+                      </div>
+                    </div>
+                    <img class="frame-icon1" alt="" src="./public/frame.svg" />
+
+                    <div class="frame14">
+                      <div class="frame15">
+                        <div class="location-">Location:-</div>
+                      </div>
+                      <div class="frame16">
+                        <div class="frame17">
+                          <div class="gali-no-26">
+                            Gali No 26 R-z Tugalkabaad extn New Delhi 110020
+                          </div>
+                        </div>
+                        <img class="frame-icon2" alt="" src="./public/frame.svg" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="frame25">
+                <div class="explore-button-anchor-tag">
+                  <div class="explore-button-anchor-tag-child"></div>
+                  <img class="vector-icon4" alt="" src="./public/vector.svg" />
+
+                  <div class="explore-more">Explore More</div>
+                </div>
+              </div>
+            </div>
+            <div class="frame26">
+              <div class="frame27">
+                <div class="explore-button-anchor-tag1">
+                  <div class="explore-button-anchor-tag-item"></div>
+                  <img class="vector-icon5" alt="" src="./public/vector.svg" />
+
+                  <div class="explore-more1">Explore More</div>
+                </div>
+              </div>
+              <div class="frame28">
+                <div class="frame29">
+                  <div class="div-room-mate">
+                    <div class="inside-of-room-mate">
+                      <div class="frame30">
+                        <div class="frame31">
+                          <div class="connect-with-roommate-wrapper">
+                            <div class="connect-with-roommate">
+                              Connect with Roommate
+                            </div>
+                          </div>
+                        </div>
+                        <div class="frame32">
+                          <div class="frame33">
+                            <img class="vector-icon6" alt="" src="./public/vector.svg" />
+
+                            <div class="frame34">
+                              <div class="gali-no-262">
+                                Gali No 26 R-z Tugalkabaad extn New Delhi
+                                110020
+                              </div>
+                              <div class="location-2">Location:-</div>
+                            </div>
+                          </div>
+                          <div class="frame35">
+                            <div class="frame36">
+                              <div class="description-">Description:-</div>
+                              <div class="join-us-in">
+                                Join us in creating a welcoming home in the
+                                vibrant city of New Delhi. Contact for
+                                details!
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="frame37">
+                        <div class="frame38">
+                          <div class="frame39">
+                            <div class="female">Female</div>
+                            <div class="gender-">Gender :-</div>
+                          </div>
+                        </div>
+                        <div class="frame40">
+                          <div class="need-room-mate">Need Room Mate!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="frame41">
+                  <div class="div-room-mate1">
+                    <div class="inside-of-room-mate">
+                      <div class="frame42">
+                        <img class="vector-icon6" alt="" src="./public/vector.svg" />
+
+                        <div class="frame34">
+                          <div class="gali-no-262">
+                            Gali No 26 R-z Tugalkabaad extn New Delhi 110020
+                          </div>
+                          <div class="location-2">Location:-</div>
+                        </div>
+                      </div>
+                      <div class="frame44">
+                        <div class="frame45">
+                          <div class="frame46">
+                            <div class="frame36">
+                              <div class="description-">Description:-</div>
+                              <div class="join-us-in">
+                                Join us in creating a welcoming home in the
+                                vibrant city of New Delhi. Contact for
+                                details!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="frame48">
+                            <div class="connect-with-roommate-wrapper">
+                              <div class="connect-with-roommate">
+                                Connect with Roommate
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="frame49">
+                          <div class="frame38">
+                            <div class="frame39">
+                              <div class="female">Female</div>
+                              <div class="gender-">Gender :-</div>
+                            </div>
+                          </div>
+                          <div class="frame40">
+                            <div class="need-room-mate">Need Room Mate!</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="frame53">
+                  <div class="div-room-mate2">
+                    <div class="inside-of-room-mate">
+                      <div class="frame30">
+                        <div class="frame33">
+                          <div class="location-4">Location:-</div>
+                          <div class="gali-no-264">
+                            Gali No 26 R-z Tugalkabaad extn New Delhi 110020
+                          </div>
+                          <img class="vector-icon6" alt="" src="./public/vector.svg" />
+                        </div>
+                        <div class="frame56">
+                          <div class="connect-with-roommate-wrapper">
+                            <div class="connect-with-roommate">
+                              Connect with Roommate
+                            </div>
+                          </div>
+                        </div>
+                        <div class="frame57">
+                          <div class="frame36">
+                            <div class="description-">Description:-</div>
+                            <div class="join-us-in">
+                              Join us in creating a welcoming home in the
+                              vibrant city of New Delhi. Contact for details!
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="frame49">
+                        <div class="frame38">
+                          <div class="frame39">
+                            <div class="female">Female</div>
+                            <div class="gender-">Gender :-</div>
+                          </div>
+                        </div>
+                        <div class="frame40">
+                          <div class="need-room-mate">Need Room Mate!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="frame63">
+                  <div class="div-room-mate3">
+                    <div class="inside-of-room-mate">
+                      <div class="need-room-mate3">Need Room Mate!</div>
+                      <div class="location-5">Location:-</div>
+                      <div class="description-3">Description:-</div>
+                      <div class="gali-no-265">
+                        Gali No 26 R-z Tugalkabaad extn New Delhi 110020
+                      </div>
+                      <div class="join-us-in3">
+                        Join us in creating a welcoming home in the vibrant
+                        city of New Delhi. Contact for details!
+                      </div>
+                      <div class="female3">Female</div>
+                      <div class="gender-3">Gender :-</div>
+                      <img class="vector-icon9" alt="" src="./public/vector.svg" />
+
+                      <div class="frame-div">
+                        <div class="connect-with-roommate">
+                          Connect with Roommate
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

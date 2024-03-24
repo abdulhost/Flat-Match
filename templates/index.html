@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home - Your App Name
+{% endblock %}
+
+{% block content %}
+<div class="custom-div">
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-7" style="margin-top: 100px;"> <!-- Adjust width as needed -->
+            <div class="row">
+                <!-- 1st card -->
+                <div class="col-md-6" style="margin-bottom: 10px; ">
+                    <div class="card" style="text-align: center;border-radius: 5px; background-color: var(--color-darkgray);">
+                        <div id="demo1" class="carousel slide" data-ride="carousel">
+                            <ul class="carousel-indicators">
+                              <li data-target="#demo1" data-slide-to="0" class="active"></li>
+                              <li data-target="#demo1" data-slide-to="1"></li>
+                              <li data-target="#demo1" data-slide-to="2"></li>
+                            </ul>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src="/static/images/dreamy-windows-with-beautiful-nature.jpg" alt="Los Angeles" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>Los Angeles</h3>
+                                  <p>We had such a great time in LA!</p>
+                                </div>    -->
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/static/images/messy-abandoned-room-psychiatric-hospital.jpg" alt="Chicago" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>Chicago</h3>
+                                  <p>Thank you, Chicago!</p>
+                                </div>    -->
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/static/images/garbage-table-with-empty-beer-drink-bottle-food-rubbish-placed-living-room.jpg" alt="New York" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>New York</h3>
+                                  <p>We love the Big Apple!</p>
+                                </div>    -->
+                              </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#demo1" data-slide="prev">
+                              <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo1" data-slide="next">
+                              <span class="carousel-control-next-icon"></span>
+                            </a>
+                          </div>
+                        <div class="card-body">
+                            <!-- <h5 class="card-title">Name 1</h5> -->
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                            <a href="/display?room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
+    
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- 2nd card -->
+                <div class="col-md-6" style="margin-bottom: 10px;">
+                    <div class="card" style="text-align: center;border-radius: 5px; background-color: var(--color-darkgray);">
+                        <div id="demo2" class="carousel slide" data-ride="carousel">
+                            <ul class="carousel-indicators">
+                              <li data-target="#demo2" data-slide-to="0" class="active"></li>
+                              <li data-target="#demo2" data-slide-to="1"></li>
+                              <li data-target="#demo2" data-slide-to="2"></li>
+                            </ul>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src="/static/images/messy-interior-full-clothing.jpg" alt="Los Angeles" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>Los Angeles</h3>
+                                  <p>We had such a great time in LA!</p>
+                                </div>    -->
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/static/images/dreamy-windows-with-beautiful-nature.jpg" alt="Chicago" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>Chicago</h3>
+                                  <p>Thank you, Chicago!</p>
+                                </div>    -->
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/static/images/garbage-table-with-empty-beer-drink-bottle-food-rubbish-placed-living-room.jpg" alt="New York" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>New York</h3>
+                                  <p>We love the Big Apple!</p>
+                                </div>    -->
+                              </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#demo2" data-slide="prev">
+                              <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo2" data-slide="next">
+                              <span class="carousel-control-next-icon"></span>
+                            </a>
+                          </div>
+                        <div class="card-body">
+                            <!-- <h5 class="card-title">Name 1</h5> -->
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                            <a href="/display?room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
+    
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- 3rd card -->
+                <div class="col-md-6" style="margin-bottom: 10px;">
+                    <div class="card" style="text-align: center;border-radius: 5px; background-color: var(--color-darkgray);">
+                        <div id="demo3" class="carousel slide" data-ride="carousel">
+                            <ul class="carousel-indicators">
+                              <li data-target="#demo3" data-slide-to="0" class="active"></li>
+                              <li data-target="#demo3" data-slide-to="1"></li>
+                              <li data-target="#demo3" data-slide-to="2"></li>
+                            </ul>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src="/static/images/dreamy-windows-with-beautiful-nature.jpg" alt="Los Angeles" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>Los Angeles</h3>
+                                  <p>We had such a great time in LA!</p>
+                                </div>    -->
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/static/images/messy-abandoned-room-psychiatric-hospital.jpg" alt="Chicago" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>Chicago</h3>
+                                  <p>Thank you, Chicago!</p>
+                                </div>    -->
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/static/images/garbage-table-with-empty-beer-drink-bottle-food-rubbish-placed-living-room.jpg" alt="New York" width="1100" height="500">
+                                <!-- <div class="carousel-caption">
+                                  <h3>New York</h3>
+                                  <p>We love the Big Apple!</p>
+                                </div>    -->
+                              </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#demo3" data-slide="prev">
+                              <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo3" data-slide="next">
+                              <span class="carousel-control-next-icon"></span>
+                            </a>
+                          </div>
+                        <div class="card-body">
+                            <!-- <h5 class="card-title">Name 1</h5> -->
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                            <a href="/display?room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
+    
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+                <!-- <div class="col-md-6">
+                    <div class="card">
+                        <img class="card-img-top"
+                            src="/static/images/garbage-table-with-empty-beer-drink-bottle-food-rubbish-placed-living-room.jpg"
+                            alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Name 2</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <img class="card-img-top" src="image2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Name 2</h5>
+                        </div>
+                    </div>
+                </div> -->
+                
+                
+            </div>
+            <a href="/display?room" style="color: white;text-align: right;display: flex;justify-content: right;">
+                Explore more 
+                <img src="/static/arrow-right (1).svg" alt="" >
+            </a>
+            
+            
+
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-5" style="margin-top: 100px;">
+            <div class="row ">
+                <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card" style="border-radius: 7%;">
+                        <div class="card-body" style="text-align: center;">
+                            <h7 class="card-title" style="color: #d31818;">Need Room Mate!</h7>
+                            <div style="display: inline-block;">
+                                <p class="card-text" style="display: inline;">Gender :- </p>
+                                <p class="card-text" id="gender" style="display: inline;">Female</p>
+                            </div>
+                    
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                    
+                            <div style="display: inline-block; margin-top: 15px;">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Description :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
+                            </div>
+                    
+                            <a href="/display?roommate?1" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card" style="border-radius: 7%;">
+                        <div class="card-body" style="text-align: center;">
+                            <h7 class="card-title" style="color: #d31818;">Need Room Mate!</h7>
+                            <div style="display: inline-block;">
+                                <p class="card-text" style="display: inline;">Gender :- </p>
+                                <p class="card-text" id="gender" style="display: inline;">Male</p>
+                            </div>
+                    
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                    
+                            <div style="display: inline-block; margin-top: 15px;">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Description :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
+                            </div>
+                    
+                            <a href="/display?roommate?2" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card" style="border-radius: 7%;">
+                        <div class="card-body" style="text-align: center;">
+                            <h7 class="card-title" style="color: #d31818;">Need Room Mate!</h7>
+                            <div style="display: inline-block;">
+                                <p class="card-text" style="display: inline;">Gender :- </p>
+                                <p class="card-text" id="gender" style="display: inline;">Female</p>
+                            </div>
+                    
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                    
+                            <div style="display: inline-block; margin-top: 15px;">
+                                <p class="card-text" style="display: inline; vertical-align: top;">Description :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
+                            </div>
+                    
+                            <a href="/display?roommate?3" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Name 6</h5>
+                            <p class="card-text">Text content here.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Name 7</h5>
+                            <p class="card-text">Text content here.</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <a href="/display?roommate" style="color: white;text-align: right;display: flex;justify-content: right;">
+                Explore more 
+                <img src="/static/arrow-right (1).svg" alt="" >
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="padding-right: 0;padding-left: 0; max-width: 100%; ">
+    <section style="height: 400px; background-color: var(--color-darkgray); color: white;">
+        <div class="row justify-content-center  h-100 d-flex align-items-start">
+            <div class="mx-auto " style="max-width: 100%;    width: 91%; text-align: center; margin-top: 35px;">
+                <label for="location" style="display: inline;">Location</label>
+                <input type="text" id="location" class="form-control rounded-pill mr-5" style="border-radius: 50%;display: inline; width: 30%; padding: 2px 0.75rem; height: 22px;" placeholder="Enter location" required>
+                <label for="kilometer" style="display: inline;">Kilometer</label>
+                <input type="number" id="kilometer" class="form-control rounded-pill mr-5" style="border-radius: 50%; width: 30%; display: inline; padding: 2px 0.75rem; height: 22px;" placeholder="Enter kilometers" required>
+                <a href="#" class="btn btn-primary rounded-pill mt-3 searchbtn align-items-start" style="display: inline;"><img src="/static/search_white_24dp.svg" alt=""></a>
+            </div>
+        </div>
+    </section>
+
+    <div style="width: 300px;">
+        <!-- Your map integration here -->
+    </div>
+</div>
+
+{% endblock %}
