@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Roommate - FlatMatch
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <h1>Roommates</h1>
+    {% for data in room_data %}
+    <div class="col-md-6" style="margin-bottom: 10px;">
+        <div class="card" style="text-align: center; border-radius: 5px; background-color: var(--color-darkgray);">
+            <div id="demo{{ data['room'][0] }}" class="carousel slide" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    {% for image in data['images'] %}
+                    <li data-target="#demo{{ data['room'][0] }}" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+                    {% endfor %}
+                </ul>
+                <div class="carousel-inner">
+                    {% for image in data['images'] %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Image" width="1100" height="500">
+                    </div>
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#demo{{ data['room'][0] }}" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo{{ data['room'][0] }}" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+            <div class="card-body">
+                <div style="display: block;">
+                    <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                    <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
+                    <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis; text-align: left; font-size: 14px; font-family: var(--font-kufam);">{{ data['room'][1] }}</p>
+                </div>
+                <div style="display: block; margin-top: 2px;">
+                    <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Description :- </p>
+                    <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">{{ data['room'][2] }}</p>
+                </div>
+                <a href="/room?id={{ data['room'][0] }}" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

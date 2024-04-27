@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register - Your App Name
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4" style="background-color: #ffffff9e;">
+                <h2 class="mb-4">Register</h2>
+                <form id="registerForm" method="post">
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address:</label>
+                        <input type="text" id="address" name="address" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender:</label>
+                        <input type="text" id="gender" name="gender" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <input type="text" id="description" name="description" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact Info:</label>
+                        <input type="text" id="contact" name="contact" placeholder="Instagram / Phone Number / or any" class="form-control" required>
+                    </div>
+                    <button type="button" onclick="GetMap();" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="map" style="visibility: hidden;  width: 2%;
+height: 2px;"></div>
+
+<script>
+    function GetMap() {
+        var addressInput = document.getElementById("address").value;
+        var description = document.getElementById("description").value;
+        var gender = document.getElementById("gender").value;
+        var contact = document.getElementById("contact").value;
+        console.log(addressInput, description, gender,contact);
+        if (typeof Microsoft !== 'undefined') {
+            // Bing Maps API is loaded, proceed with map creation and geocoding
+            var map = new Microsoft.Maps.Map('#map', {
+                credentials: 'AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C',
+                center: new Microsoft.Maps.Location(0, 0),
+                zoom: 17
+            });
+
+            // Use Bing Maps Geocoding service to get location coordinates from address
+            Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                var searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                var requestOptions = {
+                    where: addressInput,
+                    callback: function (result) {
+                        if (result && result.results && result.results.length > 0) {
+                            var location = result.results[0].location;
+
+                            // Center the map on the location
+                            map.setView({
+                                center: location
+                            });
+
+                            // Print latitude and longitude
+                            var latitude = location.latitude;
+                            var longitude = location.longitude;
+                            console.log('Latitude:', latitude);
+                            console.log('Longitude:', longitude);
+
+                            // Send data to the register route
+                            fetch("/register_roommate", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    "address": addressInput, "description": description, "latitude": latitude, "longitude": longitude, "gender": gender, "contact": contact
+                               
+                            })
+                        })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Display success message
+                    alert("Your Data was saved successfully");
+                    // Clear the form fields
+                    document.getElementById("registerForm").reset();
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        } else {
+            console.error('No results found for the address:', addressInput);
+        }
+    },
+    errorCallback: function (e) {
+        console.error('Error:', e);
+    }
+                };
+
+    searchManager.geocode(requestOptions);
+            });
+        } else {
+        // Bing Maps API is not loaded, display an error message
+        console.error('Bing Maps API is not loaded.');
+    }
+    }
+</script>
+
+
+<script type="text/javascript"
+    src="https://www.bing.com/api/maps/mapcontrol?key=AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C&callback=GetMap"
+    async defer></script>
+
+{% endblock %}

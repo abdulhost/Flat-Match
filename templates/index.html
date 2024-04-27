@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home - Your App Name
+Home - FlatMatch
 {% endblock %}
 
 {% block content %}
@@ -53,10 +53,10 @@ Home - Your App Name
                             <!-- <h5 class="card-title">Name 1</h5> -->
                             <div style="display: inline-block; ">
                                 <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
-                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
-                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px; font-family: var(--font-kufam);">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
                             </div>
-                            <a href="/display?room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
+                            <a href="/room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
     
                         </div>
                         
@@ -105,8 +105,8 @@ Home - Your App Name
                             <!-- <h5 class="card-title">Name 1</h5> -->
                             <div style="display: inline-block; ">
                                 <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
-                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
-                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px; font-family: var(--font-kufam);">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
                             </div>
                             <a href="/display?room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
     
@@ -157,8 +157,8 @@ Home - Your App Name
                             <!-- <h5 class="card-title">Name 1</h5> -->
                             <div style="display: inline-block; ">
                                 <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
-                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
-                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                                <p class="card-text" style="display: inline; vertical-align: top;font-family: var(--font-kodchasan);">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis;text-align: left; font-size: 14px; font-family: var(--font-kufam);">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
                             </div>
                             <a href="/display?room?1" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
     
@@ -203,31 +203,80 @@ Home - Your App Name
             <div class="row ">
                 <div class="col-md-10" style="margin-bottom: 2.5rem;">
                     <div class="card" style="border-radius: 7%;">
-                        <div class="card-body" style="text-align: center;">
-                            <h7 class="card-title" style="color: #d31818;">Need Room Mate!</h7>
+                        <div class="card-body customised-roommate-fonts-colors" style="text-align: center;">
+                            <h7 class="card-title" >Need Room Mate!</h7>
                             <div style="display: inline-block;">
-                                <p class="card-text" style="display: inline;">Gender :- </p>
+                                <p class="card-text" style="display: inline; font-family: var(--font-kodchasan);">Gender :- </p>
                                 <p class="card-text" id="gender" style="display: inline;">Female</p>
                             </div>
                     
                             <div style="display: inline-block; ">
                                 <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
-                                <p class="card-text" style="display: inline; vertical-align: top;">Location :- </p>
-                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;font-size: 15px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
                             </div>
                     
                             <div style="display: inline-block; margin-top: 15px;">
-                                <p class="card-text" style="display: inline; vertical-align: top;">Description :- </p>
-                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Description :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
                             </div>
                     
                             <a href="/display?roommate?1" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
 
                         </div>
-                    </div>
-                    
+                    </div>   
                 </div>
                 <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card" style="border-radius: 7%;">
+                        <div class="card-body customised-roommate-fonts-colors" style="text-align: center;">
+                            <h7 class="card-title" >Need Room Mate!</h7>
+                            <div style="display: inline-block;">
+                                <p class="card-text" style="display: inline; font-family: var(--font-kodchasan);">Gender :- </p>
+                                <p class="card-text" id="gender" style="display: inline;">Female</p>
+                            </div>
+                    
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;font-size: 15px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                    
+                            <div style="display: inline-block; margin-top: 15px;">
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Description :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
+                            </div>
+                    
+                            <a href="/display?roommate?1" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
+
+                        </div>
+                    </div>   
+                </div>
+                <div class="col-md-10" style="margin-bottom: 2.5rem;">
+                    <div class="card" style="border-radius: 7%;">
+                        <div class="card-body customised-roommate-fonts-colors" style="text-align: center;">
+                            <h7 class="card-title" >Need Room Mate!</h7>
+                            <div style="display: inline-block;">
+                                <p class="card-text" style="display: inline; font-family: var(--font-kodchasan);">Gender :- </p>
+                                <p class="card-text" id="gender" style="display: inline;">Female</p>
+                            </div>
+                    
+                            <div style="display: inline-block; ">
+                                <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;font-size: 15px;">Gali No 36, Tugalkabaad Extn New Delhi 110019</p>
+                            </div>
+                    
+                            <div style="display: inline-block; margin-top: 15px;">
+                                <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Description :- </p>
+                                <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">Join us in creating a welcoming home in the vibrant city of New Delhi. Contact for details!</p>
+                            </div>
+                    
+                            <a href="/display?roommate?1" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
+
+                        </div>
+                    </div>   
+                </div>
+                <!-- <div class="col-md-10" style="margin-bottom: 2.5rem;">
                     <div class="card" style="border-radius: 7%;">
                         <div class="card-body" style="text-align: center;">
                             <h7 class="card-title" style="color: #d31818;">Need Room Mate!</h7>
@@ -278,7 +327,7 @@ Home - Your App Name
                         </div>
                     </div>
                     
-                </div>
+                </div> -->
                 <!-- <div class="col-md-10" style="margin-bottom: 2.5rem;">
                     <div class="card">
                         <div class="card-body">
@@ -304,8 +353,8 @@ Home - Your App Name
     </div>
 </div>
 
-<div class="container" style="padding-right: 0;padding-left: 0; max-width: 100%; ">
-    <section style="height: 400px; background-color: var(--color-darkgray); color: white;">
+<!-- <div class="container" style="padding-right: 0;padding-left: 0; max-width: 100%; ">
+    <section style=" background-color: var(--color-darkgray); color: white;">
         <div class="row justify-content-center  h-100 d-flex align-items-start">
             <div class="mx-auto " style="max-width: 100%;    width: 91%; text-align: center; margin-top: 35px;">
                 <label for="location" style="display: inline;">Location</label>
@@ -315,11 +364,72 @@ Home - Your App Name
                 <a href="#" class="btn btn-primary rounded-pill mt-3 searchbtn align-items-start" style="display: inline;"><img src="/static/search_white_24dp.svg" alt=""></a>
             </div>
         </div>
-    </section>
-
-    <div style="width: 300px;">
-        <!-- Your map integration here -->
+        <div class="flex" style="margin-top: 10px;">
+          <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.132080024487!2d77.22090641508365!3d28.644800582416683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3edc7a38a69%3A0x52bfeb7a0ad9a5fc!2sDelhi%2C%20India!5e0!3m2!1sen!2sus!4v1644321930768!5m2!1sen!2sus"
+              width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
+    </section>
+</div> -->
+<div class="container mt-2" style="max-width: 100%;">
+  <div class="row">
+  <!-- First Div with Search Bars -->
+  <div class="col d-flex justify-content-center">
+    <div class="input-group mb-3 mr-3" id='searchBoxContainer' >
+        <label class="input-group-text" for="location" id="location">Location</label>
+        <!-- <input type="text" class="form-control" id="searchBox" placeholder="Enter location"> -->
+        
+          <input class="form-control" type='text'  id='searchBox' />
+        
+    </div>
+    
+    <div class="input-group mb-3 ms-3">
+        <label class="input-group-text" for="range" id="range">Range</label>
+        <input type="text" class="form-control mr-3" id="rangeinput" style="box-sizing: content-box;background-color: rgb(255, 255, 255);"placeholder="Enter range">
+        <button class="btn btn-outline-secondary" type="button" onclick="getLocation()" style="padding: 3px;">
+          <img src="/static/search_white_24dp.svg" alt="">     
+         </button>
+    </div>
+    </div>
+  </div>
+
+    <div class="row">
+    <!-- Second Div for Map -->
+    <div class="col mb-2 " >
+      <div id="map" ></div>
+      
+    </div>
+  </div>
+  
 </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+
+<footer class="bg-dark text-white py-4">
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-md-6">
+        <!-- <h5 class="mb-0">Flatmatch</h5>
+        <img src="/static/door.svg" alt="Flatmatch Icon" class="mt-2" style="width: 24px;"> -->
+        <a class="navbar-brand" href="/">
+          <div class="logo-container"> <!-- Added container for logo positioning -->
+              <img src="/static/door.svg" alt="error" width="50%">
+              <span class="logo-text" style="color: wheat;">FlatMatch</span> <!-- Moved text inside container -->
+              <div class="frame-child" style="background: radial-gradient(50% 50% at 50% 50%, #0a0a0a, #000000);"></div>
+          </div>
+      </a>
+      </div>
+      <div class="col-md-6 text-md-right">
+        <p class="mb-0">&copy; Copyright <span id="year"></span> All rights reserved to Abdul Wadood</p>
+        <!-- <p class="mb-0">Some necessary information</p> -->
+        <!-- <p class="mb-0">Another necessary information</p> -->
+      </div>
+    </div>
+  </div>
+</footer>
+
 
 {% endblock %}
