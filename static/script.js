@@ -61,11 +61,50 @@ function getLocation() {
 
                                 // Add event listener to show infobox when pin is clicked
                                 Microsoft.Maps.Events.addHandler(pin, 'click', function () {
-                                    // Show an alert with the ID of the room when the pin is clicked
-                                    alert('Room ID: ' + room.id);
-                                    // Show the infobox
-                                    infobox.setOptions({ visible: true });
+                                    // Create the modal elements
+                                    var modal = document.createElement('div');
+                                    modal.classList.add('modal');
+                                    modal.id = 'exampleModalCenter';
+                                
+                                    modal.innerHTML = `
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Room ID: ${room.id}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <strong>Address:</strong> ${room.address} <br>
+                                                <strong>Description:</strong> ${room.description}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <a type="button" href="/room?id=${room.id}" class="btn btn-primary see">See Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                               
+                                
+                                    // Append the modal to the document body
+                                    document.body.appendChild(modal);
+                                
+                                    // Trigger the modal to show
+                                    $(modal).modal('show');
+                                 // Get the element with class "see"
+                                // var seeButton = document.querySelector(".see");
+                                
+                                // // Add event listener to the "see" button
+                                // seeButton.addEventListener('click', function() {
+                                //     window.location.href = '/room?id=' + room.id;
+                                // });
+                                //     // Show the infobox
+                                //     infobox.setOptions({ visible: true });
                                 });
+                                
 
                                 // Add the pin to the map
                                 map.entities.push(pin);
@@ -101,6 +140,9 @@ function GetMap() {
     map = new Microsoft.Maps.Map('#map', {
         zoom: 18
     });
+    // Clear any existing entities on the map
+    map.entities.clear();
+
 
     Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
         var manager = new Microsoft.Maps.AutosuggestManager({ map: map });
@@ -124,7 +166,6 @@ function suggestionSelected(result) {
     script.setAttribute("src", `https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=${bingKey}`);
     document.body.appendChild(script);
 })();
-
 
 
 

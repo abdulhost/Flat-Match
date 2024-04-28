@@ -1,0 +1,127 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Admin Page</h1>
+        
+        <!-- Room Data -->
+        <h2>Room Data</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Address</th>
+                    <th>Description</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Images</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in room_data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>
+                            {% if row[5] %}
+                                {% for image in row[5].split(', ') %}
+                                    <img src="{{ image }}" alt="Room Image" style="max-width: 100px; max-height: 100px;">
+                                {% endfor %}
+                            {% else %}
+                                No Images
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+         <!-- Roommate Data -->
+         <h2>Roommate Data</h2>
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>ID</th>
+                     <th>Address</th>
+                     <th>Gender</th>
+                     <th>Description</th>
+                     <th>Contact</th>
+                     <th>Latitude</th>
+                     <th>Longitude</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for row in roommate_data %}
+                     <tr>
+                         <td>{{ row[0] }}</td>
+                         <td>{{ row[1] }}</td>
+                         <td>{{ row[2] }}</td>
+                         <td>{{ row[3] }}</td>
+                         <td>{{ row[4] }}</td>
+                         <td>{{ row[5] }}</td>
+                         <td>{{ row[6] }}</td>
+                     </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+ 
+         <!-- Users Data -->
+         <h2>Users Data</h2>
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>ID</th>
+                     <th>Username</th>
+                     <th>Email</th>
+                     <th>Password</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for row in users_data %}
+                     <tr>
+                         <td>{{ row[0] }}</td>
+                         <td>{{ row[1] }}</td>
+                         <td>{{ row[2] }}</td>
+                         <td>{{ row[3] }}</td>
+                     </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+ 
+         <!-- Contact Data -->
+         <h2>Contact Data</h2>
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>Email</th>
+                     <th>Message</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for row in contact_data %}
+                     <tr>
+                         <td>{{ row[0] }}</td>
+                         <td>{{ row[1] }}</td>
+                         <td>{{ row[2] }}</td>
+                         <td>{{ row[3] }}</td>
+                     </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+     </div>
+ </body>
+ </html>
+    </div>
+</body>
+</html>

@@ -24,6 +24,20 @@
 </head>
 
 <body>
+    <div class="container mt-5">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                        {{ message }}
+                        <script>
+                            // write code to remove the error after 3 seconds
+                        </script>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+                </div>
     <a href="/contact" class="contact-link">Contact Us</a>
 
     <nav class="nav navbar navbar-expand-lg navbar-light ">
@@ -51,12 +65,6 @@
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Dashboard</a>
                 </li> -->
-                {% if 'username' in session %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-                {% else %}
-                
                 <li class="nav-item">
                     <a class="nav-link" href="/register?type=room">Post Your Property</a>
                 </li>
@@ -69,8 +77,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/roommate?id=all">Find Roommate</a>
                 </li>
+                {% if 'username' in session %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/logout">Logout {{username}}</a>
+                </li>
+                {% else %}
+                
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" >Login</a>
                 </li>
                 {% endif %}
             </ul>
@@ -86,6 +101,78 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C&callback=loadMapScenario' async defer></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="login-error" class="alert alert-danger d-none" role="alert"></div> 
+          <form id="login-form">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+      
+      Button trigger modal
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+        Launch login modal
+      </button>
+
+      Signup Modal
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="signup-error" class="alert alert-danger d-none" role="alert"></div>
+                <form id="signup-form">
+                    Signup form fields go here
+                    <div class="form-group">
+                        <label for="signup-username">Username</label>
+                        <input type="text" class="form-control" id="signup-username" name="signup-username">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" class="form-control" id="signup-email" name="signup-email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" class="form-control" id="signup-password" name="signup-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+Button to trigger signup modal
+<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#signupModal">
+    Sign Up
+</button> -->
 
 </body>
 

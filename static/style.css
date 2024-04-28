@@ -127,7 +127,7 @@ nav {
 }
 
 .nav-item {
-    margin-right: 50px;
+    margin-right: 40px;
 }
 
 .custom-div {
@@ -235,3 +235,20 @@ flex-direction: column-reverse;
 align-content: flex-end;
 justify-content: flex-end;
 }
+
+/* CSS styles used by custom infobox template */
+.customInfobox {
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    max-width: 200px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size:12px;
+    pointer-events:auto !important;
+}
+
+    .customInfobox .title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
