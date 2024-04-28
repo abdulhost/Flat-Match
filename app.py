@@ -49,32 +49,34 @@ def create_tables():
     conn.commit()
     conn.close()
 
-def insert_dummy_data():
-    conn = sqlite3.connect('dummy.db')
-    c = conn.cursor()
+# def insert_dummy_data():
+#     conn = sqlite3.connect('dummy.db')
+#     c = conn.cursor()
 
-    # Check if the Room table is empty before inserting
-    c.execute("SELECT COUNT(*) FROM Room")
-    count = c.fetchone()[0]
-    if count == 0:
-        c.execute("INSERT INTO Room (address, description, latitude, longitude) VALUES (?, ?, ?, ?)", 
-                  ('Gali Number 23, Tugalkabad, New Delhi', 'This is near Gali Number 24', 28.5206, 77.2581))
+#     # Check if the Room table is empty before inserting
+#     c.execute("SELECT COUNT(*) FROM Room")
+#     count = c.fetchone()[0]
+#     if count == 0:
+#         c.execute("INSERT INTO Room (address, description, latitude, longitude) VALUES (?, ?, ?, ?)", 
+#                   ('Gali Number 23, Tugalkabad, New Delhi', 'This is near Gali Number 24', 28.5206, 77.2581))
 
-        c.execute("INSERT INTO Room (address, description, latitude, longitude) VALUES (?, ?, ?, ?)", 
-                  ('Gali Number 25, Tugalkabad, New Delhi', 'This is also near Gali Number 24', 28.5205, 77.2579))
-        c.execute("INSERT INTO Roommate (address, gender,description) VALUES (?, ?,?)", 
-                  ('tugalkabaad extn','Male','needed roommate '))
-        c.execute("INSERT INTO Roommate (address, gender,description,contact) VALUES (?, ?,?,?)", 
-                  ('tugalkabaad extn','FeMale','needed roommate ','87545wff'))
+#         c.execute("INSERT INTO Room (address, description, latitude, longitude) VALUES (?, ?, ?, ?)", 
+#                   ('Gali Number 25, Tugalkabad, New Delhi', 'This is also near Gali Number 24', 28.5205, 77.2579))
+#         c.execute("INSERT INTO Roommate (address, gender,description,contact,latitude,longitude) VALUES (?, ?,?,?, ?,?)", 
+#                   ('tugalkabaad extn','Male','needed roommate',"adsddsv",28.5142,77.2600))
+#         c.execute("INSERT INTO Roommate (address, gender,description,contact,latitude,longitude) VALUES (?, ?,?,?,?, ?)", 
+#                   ('tugalkabaad extn','FeMale','needed roommate ','87545wff',28.5142,77.2600))
 
-        conn.commit()
-    else:
-        print("Data already inserted.")
+# Latitude: 28.5142, Longitude: 77.2600
+# Latitude: 28.5119, Longitude: 77.2629
+    #     conn.commit()
+    # else:
+    #     print("Data already inserted.")
 
-    conn.close()
+    # conn.close()
 
 create_tables()
-insert_dummy_data()
+# insert_dummy_data()
 
 # @app.before_request
 # def clear_session():
@@ -127,7 +129,9 @@ def signup():
         c.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password))
         conn.commit()
         
-        session['username'] = username!=None
+        if username is not None:
+            session['username'] = username
+
         
         flash('You have successfully signed up!', 'success')
         return redirect(url_for('index'))
@@ -328,6 +332,58 @@ def get_roommates():
         return redirect(url_for('login'))
 
     
+# @app.route('/getavailability', methods=['POST'])
+# def getavailability():
+#     # Get data from request body
+#     data = request.json
+#     latitude = float(data.get('latitude'))
+#     longitude = float(data.get('longitude'))
+#     range_value = float(data.get('range'))
+
+#     # Calculate distance using Haversine formula
+#     def calculate_distance(lat1, lon1, lat2, lon2):
+#         # Radius of the Earth in km
+#         R = 6371.0
+
+#         # Convert latitude and longitude from degrees to radians
+#         lat1 = radians(lat1)
+#         lon1 = radians(lon1)
+#         lat2 = radians(lat2)
+#         lon2 = radians(lon2)
+
+#         # Calculate the change in coordinates
+#         dlon = lon2 - lon1
+#         dlat = lat2 - lat1
+
+#         # Apply Haversine formula
+#         a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+#         c = 2 * atan2(sqrt(a), sqrt(1 - a))
+#         distance = R * c
+#         return distance
+
+#     # Filter database rows within the specified range
+#     conn = sqlite3.connect('dummy.db')
+#     c = conn.cursor()
+#     c.execute("SELECT * FROM Room")
+    
+#     rooms = c.fetchall()
+#     c.execute("SELECT * FROM Roommate")
+#     roommate = c.fetchall()
+    
+#     rooms_in_range = []
+#     for room in rooms:
+#         room_distance = calculate_distance(latitude, longitude, room[3], room[4])
+#         if room_distance <= range_value:
+#             rooms_in_range.append({
+#                 'id': room[0],
+#                 'address': room[1],
+#                 'description': room[2],
+#                 'latitude': room[3],
+#                 'longitude': room[4]
+#             })
+
+#     return jsonify({"rooms_in_range": rooms_in_range})
+
 @app.route('/getavailability', methods=['POST'])
 def getavailability():
     # Get data from request body
@@ -357,12 +413,19 @@ def getavailability():
         distance = R * c
         return distance
 
-    # Filter database rows within the specified range
+    # Establish database connection
     conn = sqlite3.connect('dummy.db')
     c = conn.cursor()
+
+    # Fetch rooms within the specified range
     c.execute("SELECT * FROM Room")
     rooms = c.fetchall()
 
+    # Fetch roommates
+    c.execute("SELECT * FROM Roommate")
+    roommates = c.fetchall()
+
+    # Prepare room data
     rooms_in_range = []
     for room in rooms:
         room_distance = calculate_distance(latitude, longitude, room[3], room[4])
@@ -375,7 +438,24 @@ def getavailability():
                 'longitude': room[4]
             })
 
-    return jsonify({"rooms_in_range": rooms_in_range})
+    # Prepare roommate data
+    roommates_data = []
+    for roommate in roommates:
+        roommates_data.append({
+            'id': roommate[0],
+            'address': roommate[1],
+            'gender': roommate[2],
+            'description': roommate[3],
+            'contact': roommate[4],
+            'latitude': roommate[5],
+            'longitude': roommate[6]
+            
+        })
+
+    # Close database connection
+    conn.close()
+
+    return jsonify({"rooms_in_range": rooms_in_range, "roommates_data": roommates_data})
 
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -426,7 +506,7 @@ def admin():
         contact_data = c.fetchall()
 
         conn.close()
-
+        print(room_data)
         return render_template('admin.html', room_data=room_data, roommate_data=roommate_data, users_data=users_data, contact_data=contact_data)
     return redirect(url_for('login'))
 

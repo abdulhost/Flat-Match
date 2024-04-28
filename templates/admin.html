@@ -1,15 +1,13 @@
 <!-- admin.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}
+Admin - FlatMatch
+{% endblock %}
+
+{% block content %}
     <div class="container mt-5">
-        <h1>Admin Page</h1>
+        <h1  class="text-center">Admin Page</h1>
         
         <!-- Room Data -->
         <h2>Room Data</h2>
@@ -34,8 +32,8 @@
                         <td>{{ row[4] }}</td>
                         <td>
                             {% if row[5] %}
-                                {% for image in row[5].split(', ') %}
-                                    <img src="{{ image }}" alt="Room Image" style="max-width: 100px; max-height: 100px;">
+                                {% for image_path in row[5].split(', ') %}
+                                    <img src="{{ url_for('static', filename='uploads/' + image_path) }}" alt="Room Image" style="max-width: 100px; max-height: 100px;">
                                 {% endfor %}
                             {% else %}
                                 No Images
@@ -120,8 +118,4 @@
              </tbody>
          </table>
      </div>
- </body>
- </html>
-    </div>
-</body>
-</html>
+     {% endblock %}>
