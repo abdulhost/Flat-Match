@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Register - Your App Name
+Register - FlatMatch
 {% endblock %}
 
 {% block content %}
@@ -20,6 +20,10 @@ Register - Your App Name
                         <input type="text" id="description" name="description" class="form-control" required>
                     </div>
                     <div class="mb-3">
+                        <label for="contact" class="form-label">Contact Details:</label>
+                        <input type="text" id="contact" name="contact" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="images" class="form-label">Upload Images (up to 3):</label>
                         <input type="file" id="images" name="images[]" class="form-control" multiple accept="image/*">
                     </div>
@@ -36,6 +40,7 @@ height: 2px;"></div>
     function GetMap() {
         var addressInput = document.getElementById("address").value;
         var description = document.getElementById("description").value;
+        var contact = document.getElementById("contact").value;
         var files = document.getElementById("images").files;
 
         console.log(addressInput, description, files);
@@ -72,6 +77,7 @@ height: 2px;"></div>
                             var formData = new FormData();
                             formData.append('address', addressInput);
                             formData.append('description', description);
+                            formData.append('contact', contact);
                             formData.append('latitude', latitude);
                             formData.append('longitude', longitude);
                             

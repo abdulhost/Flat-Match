@@ -1,53 +1,66 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Default Autosuggest User Interface - Bing Maps Samples</title>
+    <title>Simple Custom Directions Input Panel - Bing Maps Samples</title>
 
     <meta charset="utf-8" />
 	<link rel="shortcut icon" href="/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="This sample shows how to add the default autosuggest functionality to a textbox." />
+    <meta name="description" content="This sample shows how to create a simple custom input panel for direction calculations." />
     <meta name="keywords" content="Microsoft maps, map, gis, API, SDK, Bing, Bing Maps" />
     <meta name="author" content="Microsoft Bing Maps" />
-    <meta name="screenshot" content="bmv8-autosuggestexample.jpg" />
+    <meta name="screenshot" content="screenshot.jpg" />
     
     <script>
-    var map;
+    var map, directionsManager;
 
-    function GetMap() {
+    function GetMap()
+    {
         map = new Microsoft.Maps.Map('#myMap', {});
 
-        Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
-            var manager = new Microsoft.Maps.AutosuggestManager({ map: map });
-            manager.attachAutosuggest('#searchBox', '#searchBoxContainer', suggestionSelected);
+        //Load the directions module.
+        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+            //Create an instance of the directions manager.
+            directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+            //Specify where to display the route instructions.
+            directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+
+            //Specify the where to display the input panel
+            directionsManager.showInputPanel('directionsPanel');
         });
     }
 
-    function suggestionSelected(result) {
-        //Remove previously selected suggestions from the map.
-        map.entities.clear();
+    function GetDirections() {
+        //Clear any previously calculated directions.
+        directionsManager.clearAll();
+        directionsManager.clearDisplay();
 
-        //Show the suggestion as a pushpin and center map over it.
-        var pin = new Microsoft.Maps.Pushpin(result.location);
-        map.entities.push(pin);
+        //Create waypoints to route between.
+        var start = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('fromTbx').value });
+        directionsManager.addWaypoint(start);
 
-        map.setView({ bounds: result.bestView });
+        var end = new Microsoft.Maps.Directions.Waypoint({ address: document.getElementById('toTbx').value });
+        directionsManager.addWaypoint(end);
+
+        //Calculate directions.
+        directionsManager.calculateDirections();
     }
     </script>
     
 </head>
 <body>
-    <div id='searchBoxContainer'>
-        <input type='text' id='searchBox' />
-    </div>
-
     <div id="myMap" style="position:relative;width:100%;min-width:290px;height:600px;background-color:gray"></div>
 
+    <div style="margin-top:10px;">
+        From: <input id="fromTbx" type="text" value="Redmond, WA"/>
+        To: <input id="toTbx" type="text" value="Bellevue, WA"/>
+        <input type="button" onclick="GetDirections()" value="Calculate" />
+    </div>    
+
     <fieldset style="width:800px;margin-top:10px;">
-        <legend>Autosuggest with Map Sample</legend>
-        This sample shows the basic implementation of the autosuggestion module with a map. 
+        <legend>Simple Custom Directions Input Panel Sample</legend>
+        This sample shows how to create a simple custom input panel for direction calculations.
     </fieldset>
 
     <script>
@@ -55,7 +68,7 @@
         // Get your own Bing Maps key at https://www.microsoft.com/maps
         (async () => {
             let script = document.createElement("script");
-            let bingKey = "";
+            let bingKey = "AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C";
             script.setAttribute("src", `https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=${bingKey}`);
             document.body.appendChild(script);
         })();

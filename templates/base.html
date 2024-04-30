@@ -21,11 +21,26 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> -->
+<script>   setTimeout(function() {
+    document.getElementById('flash-message').style.display = 'none';
+}, 3000);</script>
 </head>
 
 <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div id="flash-message" class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+{% endwith %}
     <div class="container mt-5">
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
                     <div class="alert alert-{{ category }}" role="alert">
@@ -36,7 +51,7 @@
                     </div>
                 {% endfor %}
             {% endif %}
-        {% endwith %}
+        {% endwith %} -->
                 </div>
     <a href="/contact" class="contact-link">Contact Us</a>
 
@@ -174,6 +189,118 @@ Button to trigger signup modal
     Sign Up
 </button> -->
 
+
+<footer class="bg-dark text-white py-4" style="margin-top: 10px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <a class="navbar-brand" href="/">
+                    <div class="logo-container">
+                        <img src="/static/door.svg" alt="FlatMatch Icon" width="50%">
+                        <span class="logo-text" style="color: wheat;">FlatMatch</span>
+                        <div class="frame-child" style="background: radial-gradient(50% 50% at 50% 50%, #0a0a0a, #000000);"></div>
+                    </div>
+                </a>
+                <p class="mt-3">Finding Rooms and RoomMates.</p>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <p class="mb-1">&copy; Copyright <span id="year"></span> All rights reserved to Abdul Wadood</p>
+                <p class="mb-1">Contact us: <a href="mailto:wadooda22@gmail.com">wadooda22@gmail.com</a> | Phone: +918882084910</p>
+                <!-- <p class="mb-1">Follow us: <a href="https://www.facebook.com/yourpage" target="_blank"><i class="fab fa-facebook"></i></a> <a href="https://twitter.com/yourpage" target="_blank"><i class="fab fa-twitter"></i></a> <a href="https://www.linkedin.com/company/yourpage" target="_blank"><i class="fab fa-linkedin"></i></a></p> -->
+                <p class="mb-1"><a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a> | <a href="#" data-toggle="modal" data-target="#privacyModal">Privacy Policy</a></p>
+                <p class="mb-1"><a href="#" data-toggle="modal" data-target="#faqModal">FAQ</a></p>
+                <p class="mb-1"><a href="#" data-toggle="modal" data-target="#aboutModal">About Us</a></p>
+                <p class="mb-1">Address: Tughlakabaad, New Delhi, India</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Terms of Service Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your Terms of Service content here -->
+                <p>This is the Terms of Service content related to your app.</p>
+                <p>We are concerned about your privacy and security. Your data is safe with us.</p>
+                <p>More terms and conditions...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="privacyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your Privacy Policy content here -->
+                <p>This is the Privacy Policy content related to your app.</p>
+                <p>We are committed to protecting your privacy and ensuring the security of your personal information.</p>
+                <p>More privacy details...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Modal -->
+<div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="faqModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="faqModalLabel">FAQ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your FAQ content here -->
+                <h5>FAQs related to FlatMatch</h5>
+                <ul>
+                    <li>How does FlatMatch work?</li>
+                    <p>FlatMatch helps you find rooms and roommates near your college. Simply create an account, search for available rooms or roommates, and connect with them.</p>
+                    <li>Is FlatMatch free to use?</li>
+                    <p>Yes, FlatMatch is completely free to use for both finding rooms and finding roommates.</p>
+                    <!-- Add more questions and answers as needed -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About Us Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="aboutModalLabel">About Us</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your About Us content here -->
+                <h5>About FlatMatch</h5>
+                <p>FlatMatch was developed and designed by <strong>Abdul Wadood</strong>. It was created to address the challenges faced by college students in finding roommates and rooms nearby their college.</p>
+                <p>Our platform aims to make it easier for students to find accommodation, especially by saving on brokerage fees when the flat is posted by its owner. We strive to make the process hassle-free for students coming from different cities.</p>
+                <!-- Add more information about your app as needed -->
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

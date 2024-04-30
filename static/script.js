@@ -1,3 +1,8 @@
+
+
+
+
+
 // search input
 
 // function getLocation() {
@@ -393,6 +398,38 @@ function animateMapToPushpins() {
     });
 }
 
+// Create a custom legend control
+function addLegendControl() {
+    // Define legend content
+    var legendContent = `
+        <div id="legendControl" style="background-color: white; padding: 10px; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);">
+            <h3 style="margin-top: 0;">Legend</h3>
+            <div class="legend-item" style="display: flex; align-items: center;">
+                <div class="legend-icon" style="width: 20px; height: 20px; border-radius: 50%; background-color: red;"></div>
+                <span style="margin-left: 5px;">Available Rooms</span>
+            </div>
+            <div class="legend-item" style="display: flex; align-items: center; margin-top: 5px;">
+                <div class="legend-icon" style="width: 20px; height: 20px; border-radius: 50%; background-color: green;"></div>
+                <span style="margin-left: 5px;">Available Roommates</span>
+            </div>
+        </div>
+    `;
+
+    // Create a div element to hold the legend content
+    var legendDiv = document.createElement('div');
+    legendDiv.innerHTML = legendContent;
+
+    // Add legend control to map
+    var legendControl = new Microsoft.Maps.CustomOverlay({
+        htmlContent: legendDiv,
+        position: map.getTopLeft()
+    });
+
+    map.layers.insert(legendControl);
+}
+
+
+
 
 
 function getLocation() {
@@ -406,16 +443,16 @@ function getLocation() {
             where: locationValue,
             callback: function (result) {
                 if (result && result.results && result.results.length > 0) {
-                    var location = result.results[0].location;
+                    var searchlocation = result.results[0].location;
 
                     // Center the map on the location
                     map.setView({
-                        center: location
+                        center: searchlocation
                     });
 
                     // Print latitude and longitude
-                    console.log('Latitude:', location.latitude);
-                    console.log('Longitude:', location.longitude);
+                    console.log('Latitude:', searchlocation.latitude);
+                    console.log('Longitude:', searchlocation.longitude);
 
                     // Send to Flask to check in the database and return based on locations
                     fetch("/getavailability", {
@@ -423,7 +460,7 @@ function getLocation() {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ "latitude": location.latitude, "longitude": location.longitude, "range": range })
+                        body: JSON.stringify({ "latitude": searchlocation.latitude, "longitude": searchlocation.longitude, "range": range })
                     })
                         .then(response => {
                             if (!response.ok) {
@@ -432,12 +469,18 @@ function getLocation() {
                             return response.json();
                         })
                         .then(data => {
-                            console.log("Response from Flask route:", data);
-
+                            console.log("Response from Flask route:", searchlocation);
+                            var pin = new Microsoft.Maps.Pushpin(searchlocation, {
+                                title: locationValue ,
+                                // subTitle: room.description,
+                                // color: 'red' // Custom red color
+                            });
+                            map.entities.push(pin);
+                            var roommateLocation,  roomLocation;
                             // Loop through each room in the response data and create room pushpins
                             data.rooms_in_range.forEach(room => {
                                 // Create a location from the room's latitude and longitude
-                                var roomLocation = new Microsoft.Maps.Location(room.latitude, room.longitude);
+                                roomLocation = new Microsoft.Maps.Location(room.latitude, room.longitude);
 
                                 // Create a custom red pushpin to mark the room location
                                 var pin = new Microsoft.Maps.Pushpin(roomLocation, {
@@ -448,14 +491,16 @@ function getLocation() {
 
                                 // Add event listener to show infobox when room pin is clicked
                                 Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+
                                     // Remove any existing modals
                                     $('.modal').remove();
 
-                                    var modal = document.createElement('div');
-modal.classList.add('modal', 'fade'); // Add fade class for smooth animation
-modal.id = 'exampleModalCenter';
 
-modal.innerHTML = `
+                                    var modal = document.createElement('div');
+                                    modal.classList.add('modal', 'fade'); // Add fade class for smooth animation
+                                    modal.id = 'exampleModalCenter';
+
+                                    modal.innerHTML = `
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #d84b41; color: white;">
@@ -495,12 +540,12 @@ modal.innerHTML = `
                             // Loop through each roommate in the response data and create roommate pushpins
                             data.roommates_data.forEach(roommate => {
                                 // Create a location from the roommate's latitude and longitude
-                                var roommateLocation = new Microsoft.Maps.Location(roommate.latitude, roommate.longitude);
+                                roommateLocation = new Microsoft.Maps.Location(roommate.latitude, roommate.longitude);
 
                                 // Create a custom green pushpin to mark the roommate location
                                 var pin = new Microsoft.Maps.Pushpin(roommateLocation, {
-                                    title: roommate.name,
-                                    subTitle: 'Roommate',
+                                    title: roommate.address,
+                                    subTitle: roommate.gender,
                                     color: 'green' // Custom green color
                                 });
 
@@ -551,7 +596,16 @@ modal.innerHTML = `
                             });
 
                             // Animate map to pushpins and set zoom level to 18
-                            animateMapToPushpins();
+                            // animateMapToPushpins();
+                            var centerLocation = roommateLocation || roomLocation;
+
+                            map.setView({
+                                center: centerLocation,
+                                zoom: 14,
+                                animate: true
+                            });
+
+
                         })
                         .catch(error => {
                             console.error("Error:", error);
@@ -569,3 +623,7 @@ modal.innerHTML = `
         searchManager.geocode(requestOptions);
     });
 }
+
+
+
+

@@ -21,7 +21,8 @@ def create_tables():
                  description TEXT,
                  latitude REAL,
                  longitude REAL,
-                images TEXT
+                images TEXT,
+              contact TEXT
                  )''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS Roommate (
@@ -89,7 +90,7 @@ def index():
     c = conn.cursor()
     c.execute("SELECT * FROM Room")
     rooms = c.fetchall()
-    print("rooms data= ",rooms)
+    # print("rooms data= ",rooms)
     room_data = []
     for room in rooms:
         images = room[5].split(', ') if room[5] else []
@@ -97,14 +98,15 @@ def index():
     
     c.execute("SELECT id,address,gender,description FROM Roommate")
     roommates = c.fetchall()
-    print("roommates data= ",roommates)
+    # print("roommates data= ",roommates)
     conn.close()
     if 'username' in session:
             username = session['username']
             print("username=",username)
             return render_template('index.html', room_data=room_data, roommates=roommates, username=username)
     else:
-    
+        # flash('Welcome to FlatMatch! Finding Rooms and Roommates made easy. We are here to help you find the perfect room and roommate near your college. Say goodbye to the hassle of searching for accommodation - our platform makes it easy and convenient. Plus, with FlatMatch, you can save on brokerage fees when the flat is posted by its owner. Get started now and make your college life easier!', 'success')
+       
         return render_template('index.html', room_data=room_data, roommates=roommates)
 
 
@@ -188,6 +190,7 @@ def register():
             longitude = float(request.form.get('longitude'))
             address = request.form.get('address')
             description = request.form.get('description')
+            contact = request.form.get('contact')
             
             # Get uploaded files
             images = request.files.getlist('images[]')
@@ -210,8 +213,8 @@ def register():
             # Convert the list of filenames to a comma-separated string
             image_filenames_str = ', '.join(image_filenames)
             
-            c.execute("INSERT INTO Room (latitude, longitude, address, description, images) VALUES (?, ?, ?, ?, ?)", 
-                    (latitude, longitude, address, description, image_filenames_str))
+            c.execute("INSERT INTO Room (latitude, longitude, address, description, images, contact) VALUES (?, ?, ?, ?, ?,?)", 
+                    (latitude, longitude, address, description, image_filenames_str, contact))
             
             # Commit changes and close connection
             conn.commit()
@@ -314,8 +317,22 @@ def get_roommates():
         if roommate_id == 'all':
             c.execute("SELECT id,address,gender,description FROM Roommate")
             roommates = c.fetchall()
-            conn.close()
-            return render_template('roommate.html', roommates=roommates, username=username)
+            
+            # return render_template('roommate.html', roommates=roommates, username=username)
+            if roommates:
+                if len(roommates)!=1:
+                        conn.close()
+                        return render_template('roommate.html', roommates=roommates, username=username)
+                else:
+                    c.execute("SELECT * FROM Roommate")
+                    roommate = c.fetchone()
+                    conn.close()
+                    print(roommate)
+                    return render_template('roommate.html', roommates=[roommate], username=username)
+
+            else:
+                
+                return jsonify({'message': 'Roommate not found'}), 404
         elif roommate_id and roommate_id.isdigit():
             # also send phone numbers or other contact details 
             c.execute("SELECT * FROM Roommate WHERE id=?", (roommate_id,))

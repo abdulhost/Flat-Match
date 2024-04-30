@@ -1,51 +1,203 @@
 {% extends "base.html" %}
 
 {% block title %}
-Roommate - FlatMatch
+Room - FlatMatch
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center">Available Rooms</h1>
-<div class="row">
-   
-    {% for data in room_data %}
-    <div class="col-md-5" style="margin-bottom: 10px;">
-        <div class="card" style="text-align: center; border-radius: 5px; background-color: var(--color-darkgray);">
-            <div id="demo{{ data['room'][0] }}" class="carousel slide" data-ride="carousel">
-                <ul class="carousel-indicators">
-                    {% for image in data['images'] %}
-                    <li data-target="#demo{{ data['room'][0] }}" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
-                    {% endfor %}
-                </ul>
-                <div class="carousel-inner">
-                    {% for image in data['images'] %}
-                    <div class="carousel-item {% if loop.first %}active{% endif %}">
-                        <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Image" width="1100" height="500">
+<div class="onedata">
+    <h1 class="text-center">Available Rooms</h1>
+    <div class="row">
+
+        {% for data in room_data %}
+        <div class="col-md-5" style="margin-bottom: 10px;">
+            <div class="card" style="text-align: center; border-radius: 5px; background-color: var(--color-darkgray);">
+                <div id="demo{{ data['room'][0] }}" class="carousel slide" data-ride="carousel">
+                    <ul class="carousel-indicators">
+                        {% for image in data['images'] %}
+                        <li data-target="#demo{{ data['room'][0] }}" data-slide-to="{{ loop.index0 }}" {% if loop.first
+                            %}class="active" {% endif %}></li>
+                        {% endfor %}
+                    </ul>
+                    <div class="carousel-inner">
+                        {% for image in data['images'] %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Image"
+                                style="object-fit: cover; width: 100%; height: 50vh;">
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                    <a class="carousel-control-prev" href="#demo{{ data['room'][0] }}" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#demo{{ data['room'][0] }}" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
                 </div>
-                <a class="carousel-control-prev" href="#demo{{ data['room'][0] }}" data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#demo{{ data['room'][0] }}" data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
+                <div class="card-body">
+                    <div style="display: block;">
+                        <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;"
+                            alt="">
+                        <p class="card-text"
+                            style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location
+                            :-
+                        </p>
+                        <p class="card-text"
+                            style="display: inline-block; max-width: 62%; text-overflow: ellipsis; text-align: left; font-size: 14px; font-family: var(--font-kufam);">
+                            {{ data['room'][1] }}</p>
+                    </div>
+                    <div style="display: block; margin-top: 2px;">
+                        <p class="card-text"
+                            style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">
+                            Description :-
+                        </p>
+                        <p class="card-text"
+                            style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">
+                            {{ data['room'][2] }}</p>
+                    </div>
+                    <a href="/room?id={{ data['room'][0] }}" class="btn btn-primary rounded-pill customised-btn"
+                        style="font-size: 11px;">Rent Now</a>
+                </div>
             </div>
-            <div class="card-body">
-                <div style="display: block;">
-                    <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
-                    <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
-                    <p class="card-text" style="display: inline-block; max-width: 62%; text-overflow: ellipsis; text-align: left; font-size: 14px; font-family: var(--font-kufam);">{{ data['room'][1] }}</p>
-                </div>
-                <div style="display: block; margin-top: 2px;">
-                    <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Description :- </p>
-                    <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">{{ data['room'][2] }}</p>
-                </div>
-                <a href="/room?id={{ data['room'][0] }}" class="btn btn-primary rounded-pill customised-btn" style="font-size: 11px;">Rent Now</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script
+    src="https://www.bing.com/api/maps/mapcontrol?key=AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C"></script>
+
+<script>
+    // Assuming room_data is defined somewhere before this script
+    // Check if the data has only one row
+    var roomData = {{ room_data | tojson }};
+
+    console.log(roomData);
+    // Check if the data has only one row
+    if (roomData.length === 1) {
+        console.log("one data")
+
+        var element = document.querySelector('.onedata').style.display = 'none';
+
+        var modalContent = `
+<div class="container" style="max-width: 95%; margin: 0 auto ;margin-bottom: 8px;    background-color: lightgoldenrodyellow;
+ border: 1px solid #ccc; border-radius: 8px;">
+    <div class="row">
+        <div class="col mb-3" style="margin-top:5px;">
+            <div class="image-container" style="overflow-x: auto; white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">`;
+
+roomData[0].images.slice(0, 3).forEach(function (image) {
+    modalContent += `
+                <img src="static/uploads/${image}" class="img-fluid" style="width: 30%; max-height: 300px; object-fit: cover; margin-right: 10px;" alt="Room Image">`;
+});
+
+modalContent += `
             </div>
         </div>
     </div>
-    {% endfor %}
+    <div class="row mt-3">
+        <div class="col text-center">
+            <p style="font-size: 18px;"><strong>Address:</strong> ${roomData[0].room[1]}</p>
+            <p style="font-size: 18px;"><strong>Description:</strong> ${roomData[0].room[2]}</p>
+            <p style="font-size: 18px;"><strong>Contact Details:</strong> ${roomData[0].room[6]}</p>
+        </div>
+    </div>
 </div>
+`;
+
+
+        var modal = document.createElement('div');
+        modal.innerHTML = modalContent;
+
+        document.body.appendChild(modal);
+
+
+
+
+
+        // Create a new div element
+        var div = document.createElement('div');
+        div.classList.add('col', 'mb-2');
+        // div.style.paddingRight = '0px';
+        // div.style.paddingLeft = '0px';
+        div.innerHTML = '<div id="map"></div>';
+
+        // Append the new div to the DOM
+        document.body.appendChild(div);
+
+
+
+
+        // function getLocation() {
+            
+        // }
+
+        // function showPosition(position) {
+            
+        // }
+
+        function initializeMap() {
+    let bingKey = "AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C";
+
+    let script = document.createElement("script");
+    script.src = `https://www.bing.com/api/maps/mapcontrol?callback=initializeMap&key=${bingKey}`;
+    document.body.appendChild(script);
+
+    window.initializeMap = function () {
+        console.log("Map initialized");
+        map = new Microsoft.Maps.Map('#map', {
+            zoom: 15
+        });
+        map.entities.clear();
+
+        markLocation(roomData); // Pass the map object to markLocation function
+    };
+
+    function markLocation(roomData) {
+        let latitude = roomData[0].room[3];
+        let longitude = roomData[0].room[4];
+
+        let location = new Microsoft.Maps.Location(latitude, longitude);
+
+        let pin = new Microsoft.Maps.Pushpin(location, {
+            title: roomData[0].room[1],
+            color: 'red'
+        });
+
+        map.entities.push(pin);
+
+        console.log("get location working");
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let currentLatitude = position.coords.latitude;
+                let currentLongitude = position.coords.longitude;
+                console.log("Current Location: ", currentLatitude, currentLongitude);
+
+                let currentLocation = new Microsoft.Maps.Location(currentLatitude, currentLongitude);
+                let currentPin = new Microsoft.Maps.Pushpin(currentLocation, {
+                    title: "You are Here",
+                    color: 'blue'
+                });
+                map.entities.push(currentPin);
+            });
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+
+        // Animate to the location of the pushpin and set zoom level to 17
+        map.setView({
+            center: location,
+            zoom: 17,
+            animate: true
+        });
+    }
+}
+
+initializeMap();
+    }
+</script>
+
+
+
 
 {% endblock %}

@@ -5,8 +5,8 @@ Roommate - FlatMatch
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center">Roommates</h1>
-<div class="row ">
+<h1 class="text-center">Roommates Needed</h1>
+<div class="row onedata">
     
     {% for roommate in roommates %}
     <div class="col-md-10" style="margin-bottom: 2.5rem;">
@@ -43,4 +43,154 @@ Roommate - FlatMatch
     </div>
     {% endfor %}
 </div>
+<script>
+src="https://www.bing.com/api/maps/mapcontrol?key=AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C"></script>
+
+<script>
+    // Assuming room_data is defined somewhere before this script
+    // Check if the data has only one row
+    var roomData = {{ roommates | tojson }};
+
+    console.log(roomData);
+    // Check if the data has only one row
+    if (roomData.length === 1) {
+        console.log("one data")
+
+        var element = document.querySelector('.onedata').style.display = 'none';
+
+        var modalContent = `
+<div class="container" style="max-width: 95%;     margin-bottom: 6px;">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card border-white">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="card-title mb-0">RoomMate Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text"><strong>Gender:</strong> ${roomData[0][2]}</p>
+                            <p class="card-text"><strong>Address:</strong> ${roomData[0][1]}</p>
+                            <p class="card-text"><strong>Description:</strong> ${roomData[0][3]}</p>
+                            <p class="card-text"><strong>Contact Details:</strong> ${roomData[0][4]}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
+
+
+        var modal = document.createElement('div');
+        modal.innerHTML = modalContent;
+
+        document.body.appendChild(modal);
+
+
+
+
+
+        // Create a new div element
+        var div = document.createElement('div');
+        div.classList.add('col', 'mb-2');
+        // div.style.paddingRight = '0px';
+        // div.style.paddingLeft = '0px';
+        div.innerHTML = '<div id="map"></div>';
+
+        // Append the new div to the DOM
+        document.body.appendChild(div);
+
+
+        // let currentLocation;
+        // function getLocation() {
+        //     if (navigator.geolocation) {
+        //         navigator.geolocation.getCurrentPosition(showPosition);
+        //     } else {
+        //         x.innerHTML = "Geolocation is not supported by this browser.";
+        //     }
+        //     let currentLatitude = position.coords.latitude;
+        //     let currentLongitude = position.coords.longitude;
+
+        //     // Create current location object
+        //     let currentLocation = new Microsoft.Maps.Location(currentLatitude, currentLongitude);
+
+        // }
+
+        // function showPosition(position) {
+        //     //   x.innerHTML = "Latitude: " + position.coords.latitude +
+        //     //   "<br>Longitude: " + position.coords.longitude;
+        //     console.log("Latitude: " + position.coords.latitude +
+        //         "<br>Longitude: " + position.coords.longitude)
+        // }
+
+
+
+        var map;
+
+        function initializeMap() {
+            let bingKey = "AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1MJu0wk-UvPlB7uTdVKErJCCGrzQo0J759C";
+
+            let script = document.createElement("script");
+            script.src = `https://www.bing.com/api/maps/mapcontrol?callback=initializeMap&key=${bingKey}`;
+            document.body.appendChild(script);
+
+            window.initializeMap = function () {
+                console.log("Map initialized");
+                map = new Microsoft.Maps.Map('#map', {
+                    zoom: 15
+                });
+                map.entities.clear();
+
+                markLocation(roomData); // Pass the map object to markLocation function
+            };
+
+            function markLocation(roomData) {
+
+                let latitude = roomData[0][5];
+                let longitude = roomData[0][6];
+
+                let location = new Microsoft.Maps.Location(latitude, longitude);
+
+                let pin = new Microsoft.Maps.Pushpin(location, {
+                    title: roomData[0][1],
+                    color: 'green'
+                });
+
+                map.entities.push(pin);
+                if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let currentLatitude = position.coords.latitude;
+                let currentLongitude = position.coords.longitude;
+                console.log("Current Location: ", currentLatitude, currentLongitude);
+
+                let currentLocation = new Microsoft.Maps.Location(currentLatitude, currentLongitude);
+                let currentPin = new Microsoft.Maps.Pushpin(currentLocation, {
+                    title: "You are Here",
+                    color: 'blue'
+                });
+                map.entities.push(currentPin);
+            });
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+                // Animate to the location of the pushpin and set zoom level to 15
+                map.setView({
+                    center: location,
+                    zoom: 16,
+                    animate: true
+                });
+                
+            }
+        }
+
+    
+
+    initializeMap();
+
+
+    }
+</script>
 {% endblock %}
