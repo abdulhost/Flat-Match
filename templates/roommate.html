@@ -15,23 +15,23 @@ Roommate - FlatMatch
                 <h7 class="card-title" >Need Room Mate!</h7>
                 <div style="display: block;">
                     <p class="card-text" style="display: inline; font-family: var(--font-kodchasan);">Gender :- </p>
-                    <p class="card-text" id="gender" style="display: inline;">{{ roommate[2] }}</p>
+                    <p class="card-text" id="gender" style="display: inline;">{{ roommate[5] }}</p>
                 </div>
                 
                 <div style="display: block; ">
                     <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;" alt="">
-                    <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location :- </p>
-                    <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;font-size: 15px;">{{ roommate[1] }}</p>
+                    <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Address :- </p>
+                    <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left;font-size: 15px;">{{ roommate[3] }}</p>
                 </div>
                 
                 <div style="display: block; margin-top: 2px;">
                     <p class="card-text" style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Description :- </p>
-                    <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">{{ roommate[3] }}</p>
+                    <p class="card-text" style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">{{ roommate[4] }}</p>
                 </div>
-                {% if roommate[4] %}
+                {% if roommate[6] %}
                 <!-- Add the following div only if roommate[4] exists -->
                 <div>
-                    <p class="card-text" style="font-weight: 600; margin-top: 2px;">Contact Info: {{ roommate[4] }}</p>
+                    <p class="card-text" style="font-weight: 600; margin-top: 2px;">Contact Info: {{ roommate[6] }}</p>
                 </div>
                 {% else %}
                 <a href="/roommate?id={{ roommate[0] }}" style="margin-top: 5px;" class="btn btn-primary rounded-pill customised-btn">Connect with Roommate</a>
@@ -69,10 +69,10 @@ src="https://www.bing.com/api/maps/mapcontrol?key=AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <p class="card-text"><strong>Gender:</strong> ${roomData[0][2]}</p>
-                            <p class="card-text"><strong>Address:</strong> ${roomData[0][1]}</p>
-                            <p class="card-text"><strong>Description:</strong> ${roomData[0][3]}</p>
-                            <p class="card-text"><strong>Contact Details:</strong> ${roomData[0][4]}</p>
+                            <p class="card-text"><strong>Gender:</strong> ${roomData[0][5]}</p>
+                            <p class="card-text"><strong>Address:</strong> ${roomData[0][3]}</p>
+                            <p class="card-text"><strong>Description:</strong> ${roomData[0][4]}</p>
+                            <p class="card-text"><strong>Contact Details:</strong> ${roomData[0][6]}</p>
                         </div>
                     </div>
                 </div>
@@ -149,13 +149,13 @@ src="https://www.bing.com/api/maps/mapcontrol?key=AuR5WeOCf_8fh8WSHkMOwevuW0Vnt1
 
             function markLocation(roomData) {
 
-                let latitude = roomData[0][5];
-                let longitude = roomData[0][6];
+                let latitude = roomData[0][7];
+                let longitude = roomData[0][8];
 
                 let location = new Microsoft.Maps.Location(latitude, longitude);
 
                 let pin = new Microsoft.Maps.Pushpin(location, {
-                    title: roomData[0][1],
+                    title: roomData[0][3],
                     color: 'green'
                 });
 

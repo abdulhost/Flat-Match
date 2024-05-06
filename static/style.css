@@ -105,6 +105,16 @@ body {
     font-family: var(--font-marcellus-sc);
     font-size: 14px;
 }
+.profile {
+    position: absolute;
+    top: 19px;
+    right: 25%;
+    color: black;
+    text-decoration: none;
+    font-family: var(--font-marcellus-sc);
+    font-size: 14px;
+    margin-right: 5px;
+}
 
 nav {
     font-weight: 500;

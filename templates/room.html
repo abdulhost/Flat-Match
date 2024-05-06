@@ -39,12 +39,12 @@ Room - FlatMatch
                         <img src="/static/location.svg" style="vertical-align: top; margin-top: 4px; width: 15px;"
                             alt="">
                         <p class="card-text"
-                            style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Location
+                            style="display: inline; vertical-align: top; font-family: var(--font-kodchasan);">Address
                             :-
                         </p>
                         <p class="card-text"
                             style="display: inline-block; max-width: 62%; text-overflow: ellipsis; text-align: left; font-size: 14px; font-family: var(--font-kufam);">
-                            {{ data['room'][1] }}</p>
+                            {{ data['room'][5] }}</p>
                     </div>
                     <div style="display: block; margin-top: 2px;">
                         <p class="card-text"
@@ -53,7 +53,7 @@ Room - FlatMatch
                         </p>
                         <p class="card-text"
                             style="display: inline-block; max-width: 65%; text-overflow: ellipsis;text-align: left; font-size: 13px;">
-                            {{ data['room'][2] }}</p>
+                            {{ data['room'][3] }}</p>
                     </div>
                     <a href="/room?id={{ data['room'][0] }}" class="btn btn-primary rounded-pill customised-btn"
                         style="font-size: 11px;">Rent Now</a>
@@ -96,9 +96,9 @@ modalContent += `
     </div>
     <div class="row mt-3">
         <div class="col text-center">
-            <p style="font-size: 18px;"><strong>Address:</strong> ${roomData[0].room[1]}</p>
-            <p style="font-size: 18px;"><strong>Description:</strong> ${roomData[0].room[2]}</p>
-            <p style="font-size: 18px;"><strong>Contact Details:</strong> ${roomData[0].room[6]}</p>
+            <p style="font-size: 18px;"><strong>Address:</strong> ${roomData[0].room[5]}</p>
+            <p style="font-size: 18px;"><strong>Description:</strong> ${roomData[0].room[3]}</p>
+            <p style="font-size: 18px;"><strong>Contact Details:</strong> ${roomData[0].room[7]}</p>
         </div>
     </div>
 </div>
@@ -153,13 +153,13 @@ modalContent += `
     };
 
     function markLocation(roomData) {
-        let latitude = roomData[0].room[3];
-        let longitude = roomData[0].room[4];
+        let latitude = roomData[0].room[8];
+        let longitude = roomData[0].room[9];
 
         let location = new Microsoft.Maps.Location(latitude, longitude);
 
         let pin = new Microsoft.Maps.Pushpin(location, {
-            title: roomData[0].room[1],
+            title: roomData[0].room[5],
             color: 'red'
         });
 

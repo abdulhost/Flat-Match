@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* background-color: #f8f9fa; */
+            background-color: rgba(228, 205, 165, 0.66);
+        }
+
+        .sidebar {
+            /* background-color: #ffffff; */
+            background-color: #edbc69;
+            border-right: 1px solid #dee2e6;
+            height: 100%;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: #343a40;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e9ecef;
+            color: #343a40;
+            text-decoration: none;
+            border-radius: 15px;
+        }
+
+        #profilePicture {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .edit-icon {
+            cursor: pointer;
+        }
+
+        .edit-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .editable[contenteditable="true"] {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        #profileForm,
+        #demoDiv {
+            display: none;
+        }
+        #flash-message {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+    }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 100;
+                width: 250px;
+                margin-top: 56px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            main {
+                margin-left: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div id="flash-message" class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for category, message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+{% endwith %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-none d-md-block sidebar" style="position: fixed;">
+                <div class="sidebar-sticky" >
+                    <img id="profilePicture" src="/{{ user[6] }}" style="margin-top: 10px;" alt="Profile Picture"
+                        class="rounded-circle img-fluid mx-auto d-block mb-3">
+                        <label class="text-center d-block" for="email">{{ user[2] }}</label> <!-- Added d-block class -->
+                        <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" onclick="toggleDashboard()">
+                                <i class="fas fa-tachometer-alt mr-2"></i> Dashboard <span
+                                    class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="toggleProfile()">
+                                <i class="fas fa-user-edit mr-2"></i> Edit Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <i class="fas fa-home mr-2"></i> Go to Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">
+                                <i class="fas fa-plus mr-2"></i> Register Room
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register_roommate">
+                                <i class="fas fa-user-plus mr-2"></i> Register RoomMate
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/room?id=all">
+                                <i class="fas fa-search mr-2"></i> Find Room
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/roommate?id=all">
+                                <i class="fas fa-search mr-2"></i> Find RoomMate
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="container mt-5">
+                    <div class="row">
+
+                        <div class="col-md-12 animate__animated animate__fadeIn" id="overview">
+                            <h2 class="mb-4">User Dashboard Overview</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Profile Information</h3>
+                                            <p class="card-text">View and update your profile details, including your
+                                                username, email, password, phone number, and a brief about yourself.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Registration</h3>
+                                            <p class="card-text">Register a room or find a roommate by navigating to the
+                                                respective sections. You can also search for available rooms and
+                                                roommates based on your preferences.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Navigation</h3>
+                                            <p class="card-text">Easily navigate to different sections of the platform
+                                                using the sidebar links. Access the home page, log out of your account,
+                                                and explore other functionalities.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Dashboard Customization</h3>
+                                            <p class="card-text">Customize your dashboard layout and preferences to suit
+                                                your needs. Stay organized and make the most out of your user
+                                                experience.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Demo Div -->
+                        <div class="col-md-12" id="demoDiv">
+
+                            <div id="datadisplay"></div>
+                            <div id="roommatedisplay"></div>
+                        </div>
+
+                        <div class="col-md-12" id="profileForm">
+                            <div class="row">
+                                <!-- Profile Picture -->
+                                <div class="col-md-4" style="padding-right: 0px;
+                                padding-left: 0px;">
+                                    <div class="text-center mb-4">
+                                        <div class="input-group">
+                                            <img id="profilePicture" src="/{{ user[6] }}" alt="Profile Picture"
+                                                class="rounded-circle img-fluid mx-auto d-block mb-3"
+                                                style="width: 150px;">
+                                            <input type="file" id="profile_picture" name="profile_picture" class="mt-2"
+                                                onchange="previewProfilePicture(this)" disabled>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text bg-light text-dark edit-icon"
+                                                    onclick="enableEditprofile('profile_picture')">
+                                                    <img src="/static/edit.svg" alt="Edit Profile Picture"
+                                                        style="width: 20px; height: 20px;">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Profile Details -->
+                                <div class="col-md-8">
+                                    <div class="card border-0 shadow-sm">
+                                        <div class="card-body">
+                                            <h2 class="card-title mb-4">Profile Details</h2>
+                                            <div class="form-group">
+                                                <label for="username">Username</label>
+                                                <div class="input-group">
+                                                    <input type="text" id="username" name="username"
+                                                        class="form-control" value="{{ user[1] }}" required disabled>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-light text-dark edit-icon"
+                                                            onclick="enableEditprofile('username')">
+                                                            <img src="/static/edit.svg" alt="Edit Username"
+                                                                style="width: 20px; height: 20px;">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <div class="input-group">
+                                                    <input type="email" id="email" name="email" class="form-control"
+                                                        value="{{ user[2] }}" required disabled>
+                                                    <!-- <div class="input-group-append">
+                                                        <span class="input-group-text bg-light text-dark edit-icon"
+                                                            onclick="enableEditprofile('email')">
+                                                            <img src="/static/edit.svg" alt="Edit Email"
+                                                                style="width: 20px; height: 20px;">
+                                                        </span>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <div class="input-group">
+                                                    <input type="password" id="password" name="password"
+                                                        class="form-control" value="{{ user[3] }}" required disabled>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-light text-dark edit-icon"
+                                                            onclick="enableEditprofile('password')">
+                                                            <img src="/static/edit.svg" alt="Edit Password"
+                                                                style="width: 20px; height: 20px;">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="phone_number">Phone Number</label>
+                                                <div class="input-group">
+                                                    <input type="text" id="phone_number" name="phone_number"
+                                                        class="form-control" value="{{ user[4] }}" disabled>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-light text-dark edit-icon"
+                                                            onclick="enableEditprofile('phone_number')">
+                                                            <img src="/static/edit.svg" alt="Edit Phone Number"
+                                                                style="width: 20px; height: 20px;">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="about_me">About Me</label>
+                                                <div class="input-group">
+                                                    <textarea id="about_me" name="about_me" class="form-control"
+                                                        disabled>{{ user[5] }}</textarea>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-light text-dark edit-icon"
+                                                            onclick="enableEditprofile('about_me')">
+                                                            <img src="/static/edit.svg" alt="Edit About Me"
+                                                                style="width: 20px; height: 20px;">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-success"
+                                                style="padding: 0.375rem 2.75rem;"
+                                                onclick="saveChanges(this,'profile')">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     // Add animation class to elements with the specified class
+        //     var elements = document.querySelectorAll('.animate__animated');
+        //     elements.forEach(function(element) {
+        //         element.classList.add('animate__fadeIn');
+        //     });
+        // });
+
+
+        // Retrieve roomData and roommateData from the Flask template
+        var roomData = JSON.parse('{{ room_data | tojson | safe }}');
+        var roommateData = JSON.parse('{{ roommate_data | tojson | safe }}');
+        var imageData = [];
+        // let imageData = []; 
+
+        // enable edits of profile
+        function enableEditprofile(fieldId) {
+            var field = document.getElementById(fieldId);
+            field.removeAttribute('disabled');
+            field.focus(); // Focus on the field after enabling editing
+            // Change the function name to something else if needed
+        }
+
+        // enable edits of rooms
+        function enableEdit(fieldIds) {
+
+            fieldIds.forEach(function (fieldId) {
+
+                var element = document.getElementById(fieldId);
+
+                console.log('Element:', element);
+                if (element) {
+                    element.removeAttribute('disabled');
+                    element.setAttribute('contenteditable', true);
+                } else {
+                    console.error('Element with ID', fieldId, 'not found.');
+                }
+
+                var elements = document.getElementsByClassName(fieldId);
+                Array.from(elements).forEach(function (element) {
+                    element.removeAttribute('disabled');
+                });
+            });
+        }
+
+
+        // preview profile img
+        function previewProfilePicture(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.querySelectorAll('#profilePicture').forEach(function (img) {
+                        img.setAttribute('src', e.target.result);
+                    });
+                    // Store the file object in imageData array
+                    imageData = input.files[0];
+                    console.log("img path= ", imageData);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+        function toggleDashboard() {
+            document.getElementById('profileForm').style.display = 'none';
+            document.getElementById('overview').style.display = 'none';
+            document.getElementById('demoDiv').style.display = 'block';
+        }
+
+        function toggleProfile() {
+            document.getElementById('demoDiv').style.display = 'none';
+            document.getElementById('overview').style.display = 'none';
+
+            document.getElementById('profileForm').style.display = 'block';
+        }
+
+        //preview room images 
+        function previewImage(event, roomIndex, index) {
+            const file = event.target.files[0];
+            const imgElement = document.getElementById(`image-${roomIndex}-${index}`);
+
+            if (imgElement && file) {
+                imgElement.src = URL.createObjectURL(file);
+                imageData[index] = file; // Store the file object in imageData array
+                console.log("img path= ", imageData[index]);
+            } else {
+                console.error(`Image element with ID 'image-${roomIndex}-${index}' not found or file not selected.`);
+            }
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Retrieve the datadisplay element
+            var datadisplay = document.getElementById("datadisplay");
+            var roommatedisplay = document.getElementById("roommatedisplay");
+            console.log(datadisplay);
+            console.log(roommatedisplay);
+
+
+            // Now you can work with roomData and roommateData in your JavaScript code
+            console.log("Room data:", roomData);
+            console.log("Roommate data:", roommateData);
+
+            // Check if roomData is not null
+            if (roomData != null && roomData.length != 0) {
+                console.log("room data available ");
+                var Content = '';
+
+                roomData.forEach(function (room, roomIndex) {
+                    Content += `
+        <div class="input-group-append" style="justify-content: flex-end">
+            <span class="input-group-text bg-secondary text-white edit-icon"
+    onclick="enableEdit(['description${room[0]}', 'contactDetails${room[0]}', 'imginput${roomIndex}','button_${room[0]}'])">
+    <img src="/static/edit.svg" alt="">
+</span>
+        </div>
+        <div class="container" style="max-width: 95%; margin: 0 auto; margin-bottom: 8px; background-color: lightgoldenrodyellow; border: 1px solid #ccc; border-radius: 8px;">
+            <div class="row">
+                <div class="col mb-3" style="margin-top:5px;">
+                    <div class="image-container" style="overflow-x: auto; white-space: wrap; display: flex; justify-content: space-between; align-items: center;">`;
+
+                    var imageFilenames = room[6].split(", ");
+                    imageFilenames.slice(0, 3).forEach(function (filename, index) {
+                        Content += `
+    <div style="margin-right: 10px;">
+        <img id="image-${roomIndex}-${index}" src="static/uploads/${filename}" class="img-fluid" style="width: 100%; max-height: 300px; object-fit: cover;" alt="Room Image">
+        <input type="file" class="imginput${roomIndex}" id="imageInput-${roomIndex}-${index}" accept="image/*" onchange="previewImage(event, ${roomIndex}, ${index})" disabled>
+    </div>
+`;
+                    });
+
+                    Content += `
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center room">
+    <p class="room" style="display:none;">room id=${room[0]}</p>
+    <p class="editable" style="font-size: 18px;">
+        <strong>Address</strong>(cannot be edited):
+        <span id="address${room[0]}" contenteditable="false">${room[5]}</span>
+    </p>
+    <p class="editable" style="font-size: 18px;">
+        <strong>Description:</strong>
+        <span id="description${room[0]}" contenteditable="false">${room[3]}</span>
+    </p>
+    <p class="editable" style="font-size: 18px;">
+        <strong>Contact Details:</strong>
+        <span id="contactDetails${room[0]}" contenteditable="false">${room[7]}</span>
+    </p>
+    <button id="button_${room[0]}" onclick="saveChanges(this, 'room')" class="btn btn-success"style="padding: 0.375rem 2.75rem;" disabled>Save</button>
+
+</div>
+
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center">
+                   
+                </div>
+            </div>
+        </div>
+    `;
+                });
+
+                // Set the inner HTML of datadisplay to the generated content
+                datadisplay.innerHTML = Content;
+
+
+                //                 var Content = `
+                //     <div class="input-group-append">
+                //         <span class="input-group-text bg-secondary text-white edit-icon"
+                //             onclick="enableEdit(['description', 'contactDetails', 'imageInputs','imginput'])">
+                //             <img src="/static/edit.svg" alt="">
+                //         </span>
+                //     </div>
+                //     <div class="container" style="max-width: 95%; margin: 0 auto; margin-bottom: 8px; background-color: lightgoldenrodyellow; border: 1px solid #ccc; border-radius: 8px;">
+                //         <div class="row">
+                //             <div class="col mb-3" style="margin-top:5px;">
+                //                 <div class="image-container" style="overflow-x: auto; white-space: wrap; display: flex; justify-content: space-between; align-items: center;">`;
+
+                //                 var imageFilenames = roomData[0][6].split(", ");
+                //                 imageFilenames.slice(0, 3).forEach(function (filename, index) {
+                //                     console.log("image filename= ", filename);
+                //                     Content += `
+                //         <div style="margin-right: 10px;">
+                //             <img id="image-${index}" src="static/uploads/${filename}" class="img-fluid" style="width: 100%; max-height: 300px; object-fit: cover; " alt="Room Image">
+                //             <input type="file" class="imginput" id="imageInput-${index}" accept="image/*" onchange="previewImage(event, ${index})" disabled>
+                //         </div>
+                //     `;
+                //                 });
+
+                //                 Content += `
+                //                 </div>
+                //             </div>
+                //         </div>
+                //         <div class="row mt-3">
+                //             <div class="col text-center room"><p>room id=${roomData[0][0]}</p>
+                //     <p class="editable" style="font-size: 18px;"><strong>Address</strong>(cannot be edited): <span id="address" contenteditable="false">${roomData[0][5]}</span></p>
+                //     <p class="editable" style="font-size: 18px;"><strong>Description:</strong> <span id="description" contenteditable="false">${roomData[0][3]}</span></p>
+                //     <p class="editable" style="font-size: 18px;"><strong>Contact Details:</strong> <span id="contactDetails" contenteditable="false">${roomData[0][7]}</span></p>
+                // </div>
+
+                //         </div>
+                //         <div class="row mt-3">
+                //             <div class="col text-center">
+                //                 <button onclick="saveChanges('room')" class="btn btn-primary">Save</button>
+                //             </div>
+                //         </div>
+                //     </div>
+                // `;
+
+                //                 // Set the inner HTML of datadisplay to the generated content
+                //                 datadisplay.innerHTML = Content;
+            }
+
+
+            else {
+                console.log(" room  data is empty ");
+                var Content = '';
+                Content += `
+<div class="alert alert-info">
+    <p>No Room Data is Available</p>
+</div>`;
+                datadisplay.innerHTML = Content;
+
+            }
+
+            if (roommateData != null && roommateData.length != 0) {
+                // console.log("roommate data ", roommateData);
+                console.log("roommate data available");
+                var Content = '';
+
+                roommateData.forEach(function (roommate, roommateIndex) {
+                    Content += `
+        <div class="input-group-append">
+            <span class="input-group-text bg-secondary text-white edit-icon"
+    onclick="enableEdit(['description${roommate[0]}', 'contactDetails${roommate[0]}', 'button_${roommate[0]}'])">
+    <img src="/static/edit.svg" alt="">
+</span>
+
+        </div>
+        <div class="container" style="max-width: 95%; margin: 0 auto; margin-bottom: 8px; background-color: lightgoldenrodyellow; border: 1px solid #ccc; border-radius: 8px;">
+            <div class="row">
+                <div class="col mb-3" style="margin-top:5px;">
+                    <div class="image-container" style="overflow-x: auto; white-space: wrap; display: flex; justify-content: space-between; align-items: center;">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center roommate">
+    <p class="roommate" style="display:none;">roommate id=${roommate[0]}</p>
+    <p class="editable" style="font-size: 18px;">
+        <strong>Address</strong>(cannot be edited):
+        <span id="address${roommate[0]}" contenteditable="false">${roommate[3]}</span>
+    </p>
+    <p class="editable" style="font-size: 18px;">
+        <strong>Description:</strong>
+        <span id="description${roommate[0]}" contenteditable="false">${roommate[4]}</span>
+    </p>
+    <p class="editable" style="font-size: 18px;">
+        <strong>Contact Details:</strong>
+        <span id="contactDetails${roommate[0]}" contenteditable="false">${roommate[6]}</span>
+    </p>
+    <button id="button_${roommate[0]}" onclick="saveChanges(this, 'roommate')" style="padding: 0.375rem 2.75rem;" class="btn btn-primary" disabled>Save Changes</button>
+
+</div>
+
+            </div>
+            
+        </div>
+    `;
+                });
+
+                // Set the inner HTML of datadisplay to the generated content
+                datadisplay.innerHTML = Content;
+            }
+
+
+            else {
+                console.log("roommate  data is empty ");
+                var Content = '';
+                Content += `
+<div class="alert alert-info">
+    <p>No RoomMate Data is Available</p>
+</div>`;
+roommatedisplay.innerHTML = Content;
+            }
+
+
+
+        });
+
+        function saveChanges(button, varName) {
+            console.log("Variable name:", varName);
+            var formData = new FormData();
+
+            // Check the variable name and run different codes accordingly
+            if (varName === "profile") {
+                // Run code specific to saving profile
+                console.log("Saving profile...");
+                var username = document.getElementById('username').value;
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+                var phone_number = document.getElementById('phone_number').value;
+                var about_me = document.getElementById('about_me').value;
+
+                // You can now use these variables as needed
+                console.log("Username:", username);
+                console.log("Email:", email);
+                console.log("Password:", password);
+                console.log("Phone Number:", phone_number);
+                console.log("About Me:", about_me);
+                var variable = "profile";
+                console.log("img path= ", imageData);
+
+
+                formData.append('username', username);
+                formData.append('email', email);
+                formData.append('password', password);
+                formData.append('phone_number', phone_number);
+                formData.append('about_me', about_me);
+                formData.append('variable', variable);
+                formData.append('images[]', imageData);
+
+            }
+            else if (varName === "room") {
+                // Run code specific to saving room
+                console.log("Saving room...");
+                // Find the closest room container relative to the clicked button
+                var roomInfoContainer = button.parentElement; // Get the parent element of the button
+
+                // Obtain the room ID
+                var roomIdElement = roomInfoContainer.querySelector('.room');
+                var roomId = roomIdElement.textContent.split('=')[1].trim(); // Extract room ID from the text
+
+                console.log("Room ID:", roomId);
+                // Obtain the description from the same room container
+                var descriptionElement = roomInfoContainer.querySelector('#description' + roomId);
+                var description = descriptionElement ? descriptionElement.innerText : '';
+                var addressElement = roomInfoContainer.querySelector('#address' + roomId);
+                var address = addressElement ? addressElement.innerText : '';
+
+                console.log("Description:", description);
+                console.log("address:", address);
+
+                // Obtain the contact details from the same room container
+                var contactDetailsElement = roomInfoContainer.querySelector('#contactDetails' + roomId);
+                var contactDetails = contactDetailsElement ? contactDetailsElement.innerText : '';
+
+                console.log("Contact Details:", contactDetails);
+
+                var variable = "room";
+                formData.append('description', description);
+                formData.append('address', address);
+                formData.append('contactDetails', contactDetails);
+                formData.append('room_id', roomId);
+                formData.append('variable', variable);
+                for (var i = 0; i < imageData.length; i++) {
+                    formData.append('images[]', imageData[i]);
+                }
+            }
+
+            else if (varName === "roommate") {
+                console.log("Roomate save chnages working");
+                console.log("Saving roommate...");
+                // Find the closest room container relative to the clicked button
+                var roommateInfoContainer = button.parentElement; // Get the parent element of the button
+
+                // Obtain the room ID
+                var roommateIdElement = roommateInfoContainer.querySelector('.roommate');
+                var roommateId = roommateIdElement.textContent.split('=')[1].trim(); // Extract room ID from the text
+
+                console.log("Roommate ID:", roommateId);
+                // Obtain the description from the same room container
+                var descriptionElement = roommateInfoContainer.querySelector('#description' + roommateId);
+                var description = descriptionElement ? descriptionElement.innerText : '';
+                var addressElement = roommateInfoContainer.querySelector('#address' + roommateId);
+                var address = addressElement ? addressElement.innerText : '';
+
+                console.log("Description mate:", description);
+                console.log("address mate:", address);
+
+                // Obtain the contact details from the same room container
+                var contactDetailsElement = roommateInfoContainer.querySelector('#contactDetails' + roommateId);
+                var contactDetails = contactDetailsElement ? contactDetailsElement.innerText : '';
+
+                console.log("Contact Details:", contactDetails);
+
+                var variable = "roommate";
+                formData.append('description', description);
+                formData.append('address', address);
+                formData.append('contactDetails', contactDetails);
+                formData.append('roommate_id', roommateId);
+                formData.append('variable', variable);
+
+            }
+
+            //    sending data using ajax
+            console.log("FormData:");
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+            fetch('/profile', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log('Response from server:', data);
+                    alert("Your Data Was Updated Successfully");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
