@@ -5,6 +5,9 @@ import json
 from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
+import bcrypt
+import random  # Import random module for generating random numbers
+import string
 
 app = Flask(__name__)
 app.secret_key = "1154"
@@ -238,10 +241,27 @@ def signup():
             print("invalid error")
             return redirect(url_for('signup'))
 
+
+         # Generate a random salt for password hashing
+        # salt = bcrypt.gensalt()
+
+        # Generate a random sequence of characters for additional randomness
+        # random_data = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+
+        # Hash the password using the generated salt and additional random data
+        # hashed_password = bcrypt.hashpw(password.encode('utf-8') + random_data.encode('utf-8'), salt)
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
         # Insert the new user into the database
         c.execute("INSERT INTO Users (username, email, password, phone_number, about_me, profile_picture, created_at, updated_at, last_login_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (username, email, password, phone_number, about_me, profile_picture, current_timestamp, current_timestamp, current_timestamp))
+                  (username, email, hashed_password, phone_number, about_me, profile_picture, current_timestamp, current_timestamp, current_timestamp))
         conn.commit()
+
+
+        # Insert the new user into the database
+        # c.execute("INSERT INTO Users (username, email, password, phone_number, about_me, profile_picture, created_at, updated_at, last_login_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        #         (username, email, password, phone_number, about_me, profile_picture, current_timestamp, current_timestamp, current_timestamp))
+        # conn.commit()
         
          # Save profile picture with user id as filename
         # if 'profile_picture' in request.files:
@@ -370,6 +390,7 @@ def profile():
                 print(username,"password= ",password,phone_number,about_me,email)
                 variable = request.form.get('variable')
                 images = request.files.getlist('images[]')
+                hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
                 if images: 
                     print("images present")
                     file_path=None
@@ -383,10 +404,10 @@ def profile():
                         if os.path.exists(file_path):
                             os.remove(file_path)
                         file.save(file_path)
-                    c.execute("UPDATE Users SET username=?, password=?, phone_number=?,profile_picture=?, about_me=?, updated_at=? WHERE email=?", (username, password, phone_number,file_path,about_me,updated_at, email))
+                    c.execute("UPDATE Users SET username=?, password=?, phone_number=?,profile_picture=?, about_me=?, updated_at=? WHERE email=?", (username, hashed_password, phone_number,file_path,about_me,updated_at, email))
                     conn.commit() 
                 else:
-                    c.execute("UPDATE Users SET username=?, password=?, phone_number=?, about_me=?, updated_at=? WHERE email=?", (username, password, phone_number,about_me,updated_at, email))
+                    c.execute("UPDATE Users SET username=?, password=?, phone_number=?, about_me=?, updated_at=? WHERE email=?", (username, hashed_password, phone_number,about_me,updated_at, email))
                     conn.commit() 
 
             elif variable=='roommate':
@@ -440,22 +461,49 @@ def login():
             return redirect(url_for('admin'))
           
         # Check if the username and password are valid
-        c.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
+        # c.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
+        # user = c.fetchone()
+
+        # Check if the user exists in the database
+        c.execute("SELECT * FROM Users WHERE email=?", (email,))
         user = c.fetchone()
-        
+        print(user)
         if user:
-            # If valid, store the username in the session
-            username=user[1]
-            session['username'] = username
-            print(username)
+            # Retrieve the stored hashed password from the database
+            stored_hashed_password = user[3]
+            print(stored_hashed_password)
+            # Verify the password by hashing the entered password with the stored salt
+            actual_salt = stored_hashed_password[:29]  # Bcrypt uses 29 bytes for salt
+            # Verify the password by hashing the entered password with the extracted salt
+            hashed_password_bytes = bcrypt.hashpw(password.encode('utf-8'), actual_salt)
+
+        # Now you can use bcrypt.checkpw() with the hashed password in bytes format
+            if bcrypt.checkpw(password.encode('utf-8'), hashed_password_bytes):
+                username=user[1]
+                session['username'] = username
+                print(username)
+                
+                
+                flash(f'Welcome back, {username}!', 'success')
+                
+                session['useremail'] = email
+                print(email)
+                # return redirect(url_for('index'))
+                return redirect(url_for('profile'))
+        
+        # if user:
+        #     # If valid, store the username in the session
+        #     username=user[1]
+        #     session['username'] = username
+        #     print(username)
             
             
-            flash(f'Welcome back, {username}!', 'success')
+        #     flash(f'Welcome back, {username}!', 'success')
             
-            session['useremail'] = email
-            print(email)
-            # return redirect(url_for('index'))
-            return redirect(url_for('profile'))
+        #     session['useremail'] = email
+        #     print(email)
+        #     # return redirect(url_for('index'))
+        #     return redirect(url_for('profile'))
         else:
             flash('Invalid username or password. Please try again.', 'error')
             
